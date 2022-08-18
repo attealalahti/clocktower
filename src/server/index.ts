@@ -1,6 +1,7 @@
 import { createServer } from "http";
 import { parse } from "url";
 import next from "next";
+import ws from "./ws";
 
 const dev = process.env.NODE_ENV !== "production";
 const hostname = process.env.RAILWAY_STATIC_URL || "localhost";
@@ -21,4 +22,5 @@ app.prepare().then(() => {
   }).listen(port, () => {
     console.log(`> Ready on http://${hostname}:${port}`);
   });
+  ws(server);
 });

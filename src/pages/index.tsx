@@ -1,5 +1,7 @@
 import type { NextPage } from "next";
 import Head from "next/head";
+import { useEffect, useState } from "react";
+import io from "socket.io-client";
 
 type TechnologyCardProps = {
   name: string;
@@ -7,7 +9,18 @@ type TechnologyCardProps = {
   documentation: string;
 };
 
+const socket = io();
+
 const Home: NextPage = () => {
+  const [connected, setConnected] = useState<boolean>(true);
+  useEffect(() => {
+    socket.on("connect", () => setConnected(true));
+    socket.on("disconnect", () => setConnected(false));
+    return () => {
+      socket.off("connect");
+      socket.off("disconnect");
+    };
+  }, []);
   return (
     <>
       <Head>
@@ -20,6 +33,7 @@ const Home: NextPage = () => {
         <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
           Create <span className="text-purple-300">T3</span> App
         </h1>
+        <p>{connected ? "Connected" : "Not Connected"}</p>
         <p className="text-2xl text-gray-700">This stack uses:</p>
         <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-3 lg:w-2/3">
           <TechnologyCard
