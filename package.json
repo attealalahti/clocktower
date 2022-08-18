@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "nodemon",
+    "dev:next": "next dev",
     "build:next": "next build",
     "build:server": "tsc --project tsconfig.server.json",
     "build": "run-s build:*",
