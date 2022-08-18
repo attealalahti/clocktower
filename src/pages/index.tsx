@@ -1,23 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import io from "socket.io-client";
 import Link from "next/link";
 
-//const socket = io();
-
 const Home: NextPage = () => {
-  /*
-  const [connected, setConnected] = useState<boolean>(true);
-  useEffect(() => {
-    socket.on("connect", () => setConnected(true));
-    socket.on("disconnect", () => setConnected(false));
-    return () => {
-      socket.off("connect");
-      socket.off("disconnect");
-    };
-  }, []);
-  */
   return (
     <>
       <Head>
