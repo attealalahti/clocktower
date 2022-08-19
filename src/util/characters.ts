@@ -1,10 +1,3 @@
-export type Character = {
-  name: string;
-  type: "Townsfolk" | "Outsider" | "Minion" | "Demon";
-  description: string;
-  nightOrder?: number;
-  firstNightOrder?: number;
-};
 export type CharacterName =
   | "washerwoman"
   | "investigator"
@@ -16,11 +9,11 @@ export type CharacterName =
   | "butler"
   | "recluse"
   | "poisoner"
-  | "scarlet woman"
+  | "scarlet_woman"
   | "imp"
   | "librarian"
   | "chef"
-  | "fortune teller"
+  | "fortune_teller"
   | "monk"
   | "virgin"
   | "soldier"
@@ -29,11 +22,22 @@ export type CharacterName =
   | "spy"
   | "baron";
 
+export type Character = {
+  name: CharacterName;
+  nameEn: string;
+  type: "Townsfolk" | "Outsider" | "Minion" | "Demon";
+  description: string;
+  nightOrder?: number;
+  firstNightOrder?: number;
+};
+
 const characters = new Map<CharacterName, Character>([
   [
     "washerwoman",
     {
-      name: "Washerwoman",
+      name: "washerwoman",
+
+      nameEn: "Washerwoman",
       type: "Townsfolk",
       description:
         "You start knowing that 1 of 2 players is a particular Townsfolk",
@@ -43,7 +47,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "investigator",
     {
-      name: "Investigator",
+      name: "investigator",
+      nameEn: "Investigator",
       type: "Townsfolk",
       description:
         "You start knowing that 1 of 2 players is a particular Minion",
@@ -53,7 +58,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "empath",
     {
-      name: "Empath",
+      name: "empath",
+      nameEn: "Empath",
       type: "Townsfolk",
       description:
         "Each night, you learn how many of your 2 alive neighbours are evil.",
@@ -64,7 +70,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "undertaker",
     {
-      name: "Undertaker",
+      name: "undertaker",
+      nameEn: "Undertaker",
       type: "Townsfolk",
       description:
         "Each night (except for the first night), you learn which character died by execution today.",
@@ -74,7 +81,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "ravenkeeper",
     {
-      name: "Ravenkeeper",
+      name: "ravenkeeper",
+      nameEn: "Ravenkeeper",
       type: "Townsfolk",
       description:
         "If you die at night, you are woken to choose a player: you learn their character.",
@@ -84,7 +92,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "slayer",
     {
-      name: "Slayer",
+      name: "slayer",
+      nameEn: "Slayer",
       type: "Townsfolk",
       description:
         "Once per game, during the day, publicly choose a player: if they are the Demon, they die.",
@@ -93,7 +102,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "mayor",
     {
-      name: "Mayor",
+      name: "mayor",
+      nameEn: "Mayor",
       type: "Townsfolk",
       description:
         "If only 3 players live and no execution occurs, your team wins. If you die at night, another player might die instead.",
@@ -102,7 +112,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "butler",
     {
-      name: "Butler",
+      name: "butler",
+      nameEn: "Butler",
       type: "Outsider",
       description:
         "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too.",
@@ -113,7 +124,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "recluse",
     {
-      name: "Recluse",
+      name: "recluse",
+      nameEn: "Recluse",
       type: "Outsider",
       description:
         "You might register as evil and as a Minion or Demon, even if dead.",
@@ -122,7 +134,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "poisoner",
     {
-      name: "Poisoner",
+      name: "poisoner",
+      nameEn: "Poisoner",
       type: "Minion",
       description:
         "Each night, choose a player: they are poisoned tonight and tomorrow day.",
@@ -131,9 +144,10 @@ const characters = new Map<CharacterName, Character>([
     },
   ],
   [
-    "scarlet woman",
+    "scarlet_woman",
     {
-      name: "Scarlet Woman",
+      name: "scarlet_woman",
+      nameEn: "Scarlet Woman",
       type: "Minion",
       description:
         "If there are 5 or more players alive and the Demon dies, you become the Demon.",
@@ -143,7 +157,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "imp",
     {
-      name: "Imp",
+      name: "imp",
+      nameEn: "Imp",
       type: "Demon",
       description:
         "Each night (except for the first night), choose a player: they die. If you kill yourself this way, a Minion becomes the Imp.",
@@ -153,7 +168,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "librarian",
     {
-      name: "Librarian",
+      name: "librarian",
+      nameEn: "Librarian",
       type: "Townsfolk",
       description:
         "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play.)",
@@ -163,7 +179,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "chef",
     {
-      name: "Chef",
+      name: "chef",
+      nameEn: "Chef",
       type: "Townsfolk",
       description:
         "You start knowing how many pairs of evil players there are.",
@@ -171,9 +188,10 @@ const characters = new Map<CharacterName, Character>([
     },
   ],
   [
-    "fortune teller",
+    "fortune_teller",
     {
-      name: "Fortune Teller",
+      name: "fortune_teller",
+      nameEn: "Fortune Teller",
       type: "Townsfolk",
       description:
         "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you.",
@@ -184,7 +202,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "monk",
     {
-      name: "Monk",
+      name: "monk",
+      nameEn: "Monk",
       type: "Townsfolk",
       description:
         "Each night (except for the first night), choose a player (not yourself): they are safe from the Demon tonight.",
@@ -194,7 +213,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "virgin",
     {
-      name: "Virgin",
+      name: "virgin",
+      nameEn: "Virgin",
       type: "Townsfolk",
       description:
         "The first time you are nominated, if the nominator is a Townsfolk, they are executed immediately.",
@@ -203,7 +223,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "soldier",
     {
-      name: "Soldier",
+      name: "soldier",
+      nameEn: "Soldier",
       type: "Townsfolk",
       description: "You are safe from the Demon",
     },
@@ -211,7 +232,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "drunk",
     {
-      name: "Drunk",
+      name: "drunk",
+      nameEn: "Drunk",
       type: "Outsider",
       description:
         "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not.",
@@ -220,7 +242,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "saint",
     {
-      name: "Saint",
+      name: "saint",
+      nameEn: "Saint",
       type: "Outsider",
       description: "If you die by execution, your team loses.",
     },
@@ -228,7 +251,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "spy",
     {
-      name: "Spy",
+      name: "spy",
+      nameEn: "Spy",
       type: "Minion",
       description:
         "Each night, you see the Grimoire. You might register as good and as a Townsfolk or Outsider, even if dead.",
@@ -239,7 +263,8 @@ const characters = new Map<CharacterName, Character>([
   [
     "baron",
     {
-      name: "Baron",
+      name: "baron",
+      nameEn: "Baron",
       type: "Minion",
       description: "There are 2 extra Outsiders in play.",
     },

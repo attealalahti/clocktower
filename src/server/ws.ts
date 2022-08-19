@@ -7,7 +7,7 @@ export default function ws(server: Server) {
   io.on("connection", (socket) => {
     console.log(`++ connect ${socket.id} (${io.engine.clientsCount})`);
     socket.on("ready", () => {
-      socket.emit("role", getCharacter("drunk"));
+      socket.emit("role", getCharacter("fortune_teller"));
     });
     socket.on("disconnect", (reason) => {
       console.log(
