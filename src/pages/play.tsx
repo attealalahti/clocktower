@@ -2,7 +2,7 @@ import { NextPage } from "next";
 import Head from "next/head";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { Character, CharacterName } from "../util/characters";
+import { Character } from "../util/characters";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
 
