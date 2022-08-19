@@ -1,4 +1,4 @@
-export type CharacterName =
+export type CharacterID =
   | "washerwoman"
   | "investigator"
   | "empath"
@@ -23,13 +23,13 @@ export type CharacterName =
   | "baron";
 
 export type Character = {
-  id: CharacterName;
+  id: CharacterID;
   type: "townsfolk" | "outsider" | "minion" | "demon";
   nightOrder?: number;
   firstNightOrder?: number;
 };
 
-const characters = new Map<CharacterName, Character>([
+const characters = new Map<CharacterID, Character>([
   [
     "washerwoman",
     {
@@ -205,6 +205,6 @@ const characters = new Map<CharacterName, Character>([
   ],
 ]);
 
-export const getCharacter = (charName: CharacterName): Character => {
-  return characters.get(charName) as Character;
+export const getCharacter = (id: CharacterID): Character => {
+  return characters.get(id) as Character;
 };
