@@ -6,7 +6,7 @@ import { useTranslation } from "next-i18next";
 import i18n from "../../next-i18next.config.mjs";
 
 const Home: NextPage = () => {
-  const { t } = useTranslation("common");
+  const { t } = useTranslation();
 
   return (
     <>

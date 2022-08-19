@@ -1,3 +1,99 @@
 {
-  "joinGame": "Liity peliin klikkaamalla tästä!"
+  "joinGame": "Liity peliin klikkaamalla tästä!",
+  "charTypes": {
+    "townsfolk": "Kyläläinen",
+    "outsider": "Ulkopuolinen",
+    "minion": "Kätyri",
+    "demon": "Demoni"
+  },
+  "characters": {
+    "washerwoman": {
+      "name": "Washerwoman",
+      "power": "You start knowing that 1 of 2 players is a particular Townsfolk"
+    },
+    "investigator": {
+      "name": "Investigator",
+      "power": "You start knowing that 1 of 2 players is a particular Minion"
+    },
+    "empath": {
+      "name": "Empaatti",
+      "power": "Each night, you learn how many of your 2 alive neighbours are evil."
+    },
+    "undertaker": {
+      "name": "Undertaker",
+      "power": "Each night (except for the first night), you learn which character died by execution today."
+    },
+    "ravenkeeper": {
+      "name": "Ravenkeeper",
+      "power": "If you die at night, you are woken to choose a player: you learn their character."
+    },
+    "slayer": {
+      "name": "Slayer",
+      "power": "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
+    },
+    "mayor": {
+      "name": "Mayor",
+      "power": "If only 3 players live and no execution occurs, your team wins. If you die at night, another player might die instead."
+    },
+    "butler": {
+      "name": "Butler",
+      "power": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
+    },
+    "recluse": {
+      "name": "Recluse",
+      "power": "You might register as evil and as a Minion or Demon, even if dead."
+    },
+    "poisoner": {
+      "name": "Poisoner",
+      "power": "Each night, choose a player: they are poisoned tonight and tomorrow day."
+    },
+    "scarlet_woman": {
+      "name": "Scarlet Woman",
+      "power": "If there are 5 or more players alive and the Demon dies, you become the Demon."
+    },
+    "imp": {
+      "name": "Imp",
+      "power": "Each night (except for the first night), choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
+    },
+    "librarian": {
+      "name": "Librarian",
+      "power": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play.)"
+    },
+    "chef": {
+      "name": "Chef",
+      "power": "You start knowing how many pairs of evil players there are."
+    },
+    "fortune_teller": {
+      "name": "Fortune Teller",
+      "power": "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you."
+    },
+    "monk": {
+      "name": "Monk",
+      "power": "Each night (except for the first night), choose a player (not yourself): they are safe from the Demon tonight."
+    },
+    "virgin": {
+      "name": "Virgin",
+      "power": "The first time you are nominated, if the nominator is a Townsfolk, they are executed immediately."
+    },
+    "soldier": {
+      "name": "Soldier",
+      "power": "You are safe from the Demon"
+    },
+    "drunk": {
+      "name": "Drunk",
+      "power": "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not."
+    },
+    "saint": {
+      "name": "Saint",
+      "power": "If you die by execution, your team loses."
+    },
+    "spy": {
+      "name": "Spy",
+      "power": "Each night, you see the Grimoire. You might register as good and as a Townsfolk or Outsider, even if dead."
+    },
+    "baron": {
+      "name": "Baron",
+      "power": "There are 2 extra Outsiders in play."
+    }
+  }
 }
