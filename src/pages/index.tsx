@@ -19,14 +19,16 @@ const Home: NextPage = () => {
           Clocktower App
         </h1>
         <div className="min-w-screen flex flex-auto flex-col items-center justify-center gap-20">
-          <div className="flex h-32 w-60 items-center justify-center rounded-xl bg-red-800 p-3 text-center text-3xl font-bold leading-relaxed shadow-xl ring-1 ring-white hover:shadow-gray-800 active:bg-red-900">
-            <Link href="/play">Click here to join the game!</Link>
-          </div>
+          <Link href="/play">
+            <div className="flex h-32 w-60 items-center justify-center rounded-xl bg-red-800 p-3 text-center text-3xl font-bold leading-relaxed shadow-xl ring-1 ring-white hover:cursor-pointer hover:shadow-gray-800 active:bg-red-900">
+              <span>Click here to join the game!</span>
+            </div>
+          </Link>
           <a
             href="https://wiki.bloodontheclocktower.com/Trouble_Brewing"
             target="_blank"
             rel="noreferrer"
-            className="font-serif text-xl underline underline-offset-2"
+            className="text-center font-serif text-xl underline underline-offset-2"
           >
             Blood on the Clocktower Wiki
           </a>
