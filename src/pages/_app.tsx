@@ -1,16 +1,14 @@
 import "../styles/globals.css";
-import type { AppType } from "next/dist/shared/lib/utils";
 import { SessionProvider } from "next-auth/react";
+import { appWithTranslation } from "next-i18next";
+import type { AppProps } from "next/app";
 
-const MyApp: AppType = ({
-  Component,
-  pageProps: { session, ...pageProps },
-}) => {
+function MyApp({ Component, pageProps: { session, ...pageProps } }: AppProps) {
   return (
     <SessionProvider session={session}>
       <Component {...pageProps} />
     </SessionProvider>
   );
-};
+}
 
-export default MyApp;
+export default appWithTranslation(MyApp);

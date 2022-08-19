@@ -5,6 +5,8 @@ import io from "socket.io-client";
 import { Character } from "../util/characters";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
+import { serverSideTranslations } from "next-i18next/serverSideTranslations";
+import i18n from "../../next-i18next.config.mjs";
 
 const socket = io();
 
@@ -66,5 +68,11 @@ const Play: NextPage = () => {
     </>
   );
 };
+
+export const getStaticProps = async ({ locale }: { locale: string }) => ({
+  props: {
+    ...(await serverSideTranslations(locale, ["common"], { i18n })),
+  },
+});
 
 export default Play;
