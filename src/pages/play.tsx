@@ -38,7 +38,7 @@ const Play: NextPage = () => {
 
   return (
     <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
-      {role && session /* && role.type !== "unassigned" */ ? (
+      {role && session && role.type !== "unassigned" ? (
         <>
           <div className="mb-5 font-serif text-xl">{t("youAre")}</div>
           <Image
@@ -63,6 +63,8 @@ const Play: NextPage = () => {
             {t(`characters.${role.id}.power`)}
           </p>
         </>
+      ) : role && role.type === "unassigned" ? (
+        <div className="dots p-3 font-serif text-2xl">{t("waiting")}</div>
       ) : (
         <Image src={loadingAnimation} alt="loading" />
       )}
