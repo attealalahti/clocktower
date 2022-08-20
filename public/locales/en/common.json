@@ -5,6 +5,9 @@
   "joinGame": "Click here to join the game!",
   "youAre": "You are the...",
   "waiting": "Waiting for the Storyteller select roles",
+  "warning": "Do not show this screen to other players",
+  "show": "Show your role",
+  "hide": "Hide your role",
   "charTypes": {
     "townsfolk": "Townsfolk",
     "outsider": "Outsider",

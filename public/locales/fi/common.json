@@ -5,6 +5,9 @@
   "joinGame": "Liity peliin klikkaamalla tästä!",
   "youAre": "Sinä olet...",
   "waiting": "Odotetaan, että Tarinankertoja valitsee roolit",
+  "warning": "Älä näytä tätä ruutua muille pelaajille",
+  "show": "Näytä roolisi",
+  "hide": "Piilota roolisi",
   "charTypes": {
     "townsfolk": "Kyläläinen",
     "outsider": "Ulkopuolinen",

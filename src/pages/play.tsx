@@ -19,6 +19,7 @@ const Play: NextPage = () => {
     },
   });
   const [role, setRole] = useState<Character | undefined>(undefined);
+  const [showChar, setShowChar] = useState<boolean>(false);
   const { t } = useTranslation();
 
   async function fetchRole() {
@@ -40,28 +41,45 @@ const Play: NextPage = () => {
     <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
       {role && session && role.type !== "unassigned" ? (
         <>
-          <div className="mb-5 font-serif text-xl">{t("youAre")}</div>
-          <Image
-            src={`/images/${role.id}.webp`}
-            alt={t(`characters.${role.id}.name`)}
-            width={177}
-            height={124}
-          />
-          <h1 className="mt-5 font-serif text-4xl">
-            {t(`characters.${role.id}.name`)}
-          </h1>
-          <div
-            className={`${
-              role.type === "townsfolk" || role.type === "outsider"
-                ? "text-blue-300"
-                : "text-red-600"
-            } mt-1 text-lg`}
-          >
-            {t(`charTypes.${role.type}`)}
+          <div className="mt-5 px-3 text-2xl uppercase text-red-500">
+            {t("warning")}
           </div>
-          <p className="mt-7 max-w-xl text-xl">
-            {t(`characters.${role.id}.power`)}
-          </p>
+          {showChar ? (
+            <div className="mx-4 mt-10 rounded-lg p-6 shadow-sm shadow-white">
+              <div className="mb-5 font-serif text-xl">{t("youAre")}</div>
+              <Image
+                src={`/images/${role.id}.webp`}
+                alt={t(`characters.${role.id}.name`)}
+                width={177}
+                height={124}
+              />
+              <h1 className="mt-5 font-serif text-4xl">
+                {t(`characters.${role.id}.name`)}
+              </h1>
+              <div
+                className={`${
+                  role.type === "townsfolk" || role.type === "outsider"
+                    ? "text-blue-300"
+                    : "text-red-500"
+                } mt-1 text-lg`}
+              >
+                {t(`charTypes.${role.type}`)}
+              </div>
+              <p className="mt-7 max-w-xl text-xl">
+                {t(`characters.${role.id}.power`)}
+              </p>
+            </div>
+          ) : (
+            <></>
+          )}
+          <button
+            className={`${
+              showChar ? "p-3 text-base" : "p-4 text-xl"
+            } mt-7 rounded-lg bg-gray-300 font-bold text-black`}
+            onClick={() => setShowChar((current) => !current)}
+          >
+            {showChar ? t("hide") : t("show")}
+          </button>
         </>
       ) : role && role.type === "unassigned" ? (
         <div className="dots p-3 font-serif text-2xl">{t("waiting")}</div>
