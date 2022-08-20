@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-export const CharacterEnum = z.enum([
+export const CharIdSchema = z.enum([
   "unassigned",
   "washerwoman",
   "investigator",
@@ -26,7 +26,7 @@ export const CharacterEnum = z.enum([
   "baron",
 ]);
 
-export type CharId = z.infer<typeof CharacterEnum>;
+export type CharId = z.infer<typeof CharIdSchema>;
 
 export type CharType =
   | "townsfolk"
