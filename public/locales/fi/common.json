@@ -1,4 +1,7 @@
 {
+  "header": {
+    "changeLanguage": "In English"
+  },
   "joinGame": "Liity peliin klikkaamalla tästä!",
   "charTypes": {
     "townsfolk": "Kyläläinen",

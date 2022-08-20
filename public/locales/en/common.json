@@ -1,4 +1,7 @@
 {
+  "header": {
+    "changeLanguage": "Suomeksi"
+  },
   "joinGame": "Click here to join the game!",
   "charTypes": {
     "townsfolk": "Townsfolk",
