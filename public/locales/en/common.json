@@ -4,7 +4,7 @@
   },
   "joinGame": "Click here to join the game!",
   "youAre": "You are the...",
-  "waiting": "Waiting for the Storyteller select all roles",
+  "waiting": "Waiting for the Storyteller select roles",
   "charTypes": {
     "townsfolk": "Townsfolk",
     "outsider": "Outsider",
