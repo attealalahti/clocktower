@@ -8,9 +8,10 @@ const Home: NextPage = () => {
   const { t } = useTranslation();
 
   return (
-    <main className="min-w-screen flex flex-auto flex-col items-center justify-center gap-20">
+    <main className="min-w-screen flex flex-auto flex-col items-center justify-center gap-20 text-center">
+      <h1 className="mt-5 font-serif text-4xl">Clocktower App</h1>
       <Link href="/play">
-        <div className="flex h-40 w-60 items-center justify-center rounded-xl bg-red-800 p-3 text-center text-3xl font-bold leading-relaxed shadow-xl ring-1 ring-white hover:cursor-pointer hover:shadow-gray-800 active:bg-red-900">
+        <div className="flex h-40 w-60 items-center justify-center rounded-xl bg-red-800 p-3 text-3xl font-bold leading-relaxed shadow-xl ring-1 ring-white hover:cursor-pointer hover:shadow-gray-800 active:bg-red-900">
           <span>{t("joinGame")}</span>
         </div>
       </Link>
@@ -18,7 +19,7 @@ const Home: NextPage = () => {
         href="https://wiki.bloodontheclocktower.com/Trouble_Brewing"
         target="_blank"
         rel="noreferrer"
-        className="text-center font-serif text-xl underline underline-offset-2"
+        className="mb-5 font-serif text-xl underline underline-offset-2"
       >
         Blood on the Clocktower Wiki
       </a>
