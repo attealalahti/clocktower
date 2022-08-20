@@ -3,6 +3,7 @@
     "changeLanguage": "Suomeksi"
   },
   "joinGame": "Click here to join the game!",
+  "youAre": "You are the...",
   "charTypes": {
     "townsfolk": "Townsfolk",
     "outsider": "Outsider",
@@ -16,7 +17,7 @@
     },
     "investigator": {
       "name": "Investigator",
-      "power": "You start knowing that 1 of 2 players is a particular Minion"
+      "power": "You start knowing that 1 of 2 players is a particular Minion."
     },
     "empath": {
       "name": "Empath",
@@ -64,7 +65,7 @@
     },
     "chef": {
       "name": "Chef",
-      "power": "You start knowing how many pairs of evil players there are."
+      "power": "You start knowing how many pairs of evil players sit next to each other."
     },
     "fortune_teller": {
       "name": "Fortune Teller",

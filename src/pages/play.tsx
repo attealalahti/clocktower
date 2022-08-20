@@ -29,7 +29,7 @@ const Play: NextPage = () => {
     <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
       {role ? (
         <>
-          <div className="mb-5 font-serif text-xl">You are the...</div>
+          <div className="mb-5 font-serif text-xl">{t("youAre")}</div>
           <Image
             src={`/images/${role.id}.webp`}
             alt={t(`characters.${role.id}.name`)}

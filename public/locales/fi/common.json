@@ -3,6 +3,7 @@
     "changeLanguage": "In English"
   },
   "joinGame": "Liity peliin klikkaamalla tästä!",
+  "youAre": "Sinä olet...",
   "charTypes": {
     "townsfolk": "Kyläläinen",
     "outsider": "Ulkopuolinen",
@@ -11,92 +12,92 @@
   },
   "characters": {
     "washerwoman": {
-      "name": "Washerwoman",
-      "power": "You start knowing that 1 of 2 players is a particular Townsfolk"
+      "name": "Pyykkäri",
+      "power": "Aloitat tietäen, että yksi kahdesta pelaajasta on tietty Kyläläinen."
     },
     "investigator": {
-      "name": "Investigator",
-      "power": "You start knowing that 1 of 2 players is a particular Minion"
+      "name": "Etsivä",
+      "power": "Aloitat tietäen, että yksi kahdesta pelaajasta on tietty Kätyri."
     },
     "empath": {
       "name": "Empaatti",
-      "power": "Each night, you learn how many of your 2 alive neighbours are evil."
+      "power": "Joka yö, opit kuinka moni kahdesta elävästä naapuristasi on paha."
     },
     "undertaker": {
-      "name": "Undertaker",
-      "power": "Each night (except for the first night), you learn which character died by execution today."
+      "name": "Hautaaja",
+      "power": "Joka yö (paitsi ensimmäinen yö), opit mikä hahmo teloitettiin edellisenä päivänä."
     },
     "ravenkeeper": {
-      "name": "Ravenkeeper",
-      "power": "If you die at night, you are woken to choose a player: you learn their character."
+      "name": "Korpinhoitaja",
+      "power": "Jos kuolet yöllä, sinut herätetään valitsemaan pelaaja: opit hänen hahmonsa."
     },
     "slayer": {
-      "name": "Slayer",
-      "power": "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
+      "name": "Metsästäjä",
+      "power": "Kerran pelin aikana päivällä, valitse pelaaja julkisesti: jos hän on Demoni, hän kuolee."
     },
     "mayor": {
-      "name": "Mayor",
-      "power": "If only 3 players live and no execution occurs, your team wins. If you die at night, another player might die instead."
+      "name": "Pormestari",
+      "power": "Jos vain kolme pelaajaa on elossa ja ketään ei teloiteta, tiimisi voittaa. Jos kuolet yöllä, toinen pelaaja saattaa kuolla puolestasi."
     },
     "butler": {
-      "name": "Butler",
-      "power": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
+      "name": "Hovimestari",
+      "power": "Joka yö, valitse toinen pelaaja: huomenna voit äänestää vain jos hän äänestää myös."
     },
     "recluse": {
-      "name": "Recluse",
-      "power": "You might register as evil and as a Minion or Demon, even if dead."
+      "name": "Erakko",
+      "power": "Sinä saatat näkyä pahana, ja Kätyrinä tai Demonina, kuolemasi jälkeenkin."
     },
     "poisoner": {
-      "name": "Poisoner",
-      "power": "Each night, choose a player: they are poisoned tonight and tomorrow day."
+      "name": "Myrkyttäjä",
+      "power": "Joka yö, valitse pelaaja: hän on myrkytetty tämän yön ja huomisen päivän ajan."
     },
     "scarlet_woman": {
-      "name": "Scarlet Woman",
-      "power": "If there are 5 or more players alive and the Demon dies, you become the Demon."
+      "name": "Tulipunainen Nainen",
+      "power": "Jos viisi tai enemmän pelaajaa on elossa ja Demoni kuolee, sinusta tulee Demoni."
     },
     "imp": {
-      "name": "Imp",
-      "power": "Each night (except for the first night), choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
+      "name": "Piru",
+      "power": "Joka yö (paitsi ensimmäinen yö), valitse pelaaja: hän kuolee. Jos tapat itsesi tällä tavalla, yhdestä Kätyristäsi tulee Piru."
     },
     "librarian": {
-      "name": "Librarian",
-      "power": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play.)"
+      "name": "Kirjastonhoitaja",
+      "power": "Aloitat tietäen, että yksi kahdesta pelaajasta on tietty Ulkopuolinen. (Tai että Ulkopuolisia ei ole.)"
     },
     "chef": {
-      "name": "Chef",
-      "power": "You start knowing how many pairs of evil players there are."
+      "name": "Kokki",
+      "power": "Aloitat tietäen kuinka monta pahojen pelaajien paria istuu vierekkäin."
     },
     "fortune_teller": {
-      "name": "Fortune Teller",
-      "power": "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you."
+      "name": "Ennustaja",
+      "power": "Joka yö, valitse kaksi pelaajaa: opit jos jompikumpi heistä on Demoni. Yksi hyvä pelaaja näkyy sinulle myös Demonina."
     },
     "monk": {
-      "name": "Monk",
-      "power": "Each night (except for the first night), choose a player (not yourself): they are safe from the Demon tonight."
+      "name": "Munkki",
+      "power": "Joka yö (paitsi ensimmäinen yö), valitse toinen pelaaja: hän on turvassa Demonilta tänä yönä."
     },
     "virgin": {
-      "name": "Virgin",
-      "power": "The first time you are nominated, if the nominator is a Townsfolk, they are executed immediately."
+      "name": "Neitsyt",
+      "power": "Jos sinut ehdotetaan teloitettavaksi ensimmäisen kerran ja ehdottaja on Kyläläinen, hänet teloitetaan välittömästi."
     },
     "soldier": {
-      "name": "Soldier",
-      "power": "You are safe from the Demon"
+      "name": "Sotilas",
+      "power": "Olet turvassa Demonilta."
     },
     "drunk": {
-      "name": "Drunk",
-      "power": "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not."
+      "name": "Juoppo",
+      "power": "Et tiedä olevasi Juoppo. Luulet olevasi Kyläläis-hahmo, mutta et ole oikeasti."
     },
     "saint": {
-      "name": "Saint",
-      "power": "If you die by execution, your team loses."
+      "name": "Pyhimys",
+      "power": "Jos sinut teloitetaan, tiimisi häviää."
     },
     "spy": {
-      "name": "Spy",
-      "power": "Each night, you see the Grimoire. You might register as good and as a Townsfolk or Outsider, even if dead."
+      "name": "Vakooja",
+      "power": "Joka yö, näet Grimoiren. Sinä saatat näkyä hyvänä, ja Kyläläisenä tai Ulkopuolisena, kuolemasi jälkeenkin."
     },
     "baron": {
-      "name": "Baron",
-      "power": "There are 2 extra Outsiders in play."
+      "name": "Paroni",
+      "power": "Ulkopuolisia on pelissä kaksi enemmän."
     }
   }
 }
