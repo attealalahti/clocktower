@@ -1,24 +1,35 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
 import io from "socket.io-client";
-import { Character, getCharacter } from "../util/characters";
+import { Character } from "../util/characters";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18n from "../../next-i18next.config.mjs";
 import { useTranslation } from "next-i18next";
+import { useSession, signIn, getSession } from "next-auth/react";
 
 const socket = io();
 
 const Play: NextPage = () => {
-  const [role, setRole] = useState<Character | undefined>(getCharacter("monk"));
+  const { data: session } = useSession({
+    required: true,
+    onUnauthenticated() {
+      signIn();
+    },
+  });
+  const [role, setRole] = useState<Character | undefined>(undefined);
   const { t } = useTranslation();
 
+  async function fetchRole() {
+    socket.emit("ready", (await getSession())?.user?.id);
+  }
+
   useEffect(() => {
-    socket.on("connect", () => socket.emit("ready"));
+    socket.on("connect", fetchRole);
     socket.on("disconnect", () => setRole(undefined));
     socket.on("role", (role: Character) => setRole(role));
-    socket.emit("ready");
+    fetchRole();
     return () => {
       socket.off("connect");
       socket.off("disconnect");
@@ -27,7 +38,7 @@ const Play: NextPage = () => {
 
   return (
     <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
-      {role ? (
+      {role && session /* && role.type !== "unassigned" */ ? (
         <>
           <div className="mb-5 font-serif text-xl">{t("youAre")}</div>
           <Image
@@ -59,7 +70,7 @@ const Play: NextPage = () => {
   );
 };
 
-export const getStaticProps = async ({ locale }: { locale: string }) => ({
+export const getServerSideProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common"], { i18n })),
   },

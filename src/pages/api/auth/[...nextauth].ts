@@ -3,14 +3,21 @@ import NextAuth, { type NextAuthOptions } from "next-auth";
 // Prisma adapter for NextAuth, optional and can be removed
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
 import { prisma } from "../../../server/db/client";
-import { env } from "../../../env/server.mjs";
+import CredentialsProvider from "next-auth/providers/credentials";
+import { player } from "@prisma/client";
 
 export const authOptions: NextAuthOptions = {
-  // Include user.id on session
   callbacks: {
-    session({ session, user }) {
-      if (session.user) {
-        session.user.id = user.id;
+    jwt: async ({ token, user }) => {
+      if (user) {
+        token.user = user;
+      }
+      return token;
+    },
+    session: async ({ session, token }) => {
+      // Hack to give session the id from players table
+      if (session.user && token.user && (token.user as player).id) {
+        session.user.id = (token.user as player).id as unknown as string;
       }
       return session;
     },
@@ -18,8 +25,23 @@ export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
   adapter: PrismaAdapter(prisma),
   providers: [
-    // ...add providers here
+    CredentialsProvider({
+      name: "a name",
+      credentials: { name: { label: "Name", type: "text" } },
+      async authorize(credentials) {
+        if (!credentials?.name) return null;
+        const newPlayer = await prisma.player.create({
+          data: {
+            name: credentials.name,
+          },
+        });
+        return newPlayer;
+      },
+    }),
   ],
+  session: {
+    strategy: "jwt",
+  },
 };
 
 export default NextAuth(authOptions);

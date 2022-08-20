@@ -1,35 +1,42 @@
-export type CharacterID =
-  | "washerwoman"
-  | "investigator"
-  | "empath"
-  | "undertaker"
-  | "ravenkeeper"
-  | "slayer"
-  | "mayor"
-  | "butler"
-  | "recluse"
-  | "poisoner"
-  | "scarlet_woman"
-  | "imp"
-  | "librarian"
-  | "chef"
-  | "fortune_teller"
-  | "monk"
-  | "virgin"
-  | "soldier"
-  | "drunk"
-  | "saint"
-  | "spy"
-  | "baron";
+import { z } from "zod";
+
+export const CharacterEnum = z.enum([
+  "unassigned",
+  "washerwoman",
+  "investigator",
+  "empath",
+  "undertaker",
+  "ravenkeeper",
+  "slayer",
+  "mayor",
+  "butler",
+  "recluse",
+  "poisoner",
+  "scarlet_woman",
+  "imp",
+  "librarian",
+  "chef",
+  "fortune_teller",
+  "monk",
+  "virgin",
+  "soldier",
+  "drunk",
+  "saint",
+  "spy",
+  "baron",
+]);
+
+export type CharacterID = z.infer<typeof CharacterEnum>;
 
 export type Character = {
   id: CharacterID;
-  type: "townsfolk" | "outsider" | "minion" | "demon";
+  type: "townsfolk" | "outsider" | "minion" | "demon" | "unassigned";
   nightOrder?: number;
   firstNightOrder?: number;
 };
 
 const characters = new Map<CharacterID, Character>([
+  ["unassigned", { id: "unassigned", type: "unassigned" }],
   [
     "washerwoman",
     {
