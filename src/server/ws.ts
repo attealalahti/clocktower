@@ -1,6 +1,6 @@
 import { Server } from "http";
 import { Server as SocketIOServer } from "socket.io";
-import { getCharacter, CharacterEnum, CharacterID } from "../util/characters";
+import { getCharacter, CharacterEnum, CharId } from "../util/characters";
 import { z } from "zod";
 import { PrismaClient } from "@prisma/client";
 
@@ -16,7 +16,7 @@ export default function ws(server: Server) {
         idSchema.parse(id);
         const player = await prisma.player.findFirst({ where: { id } });
         CharacterEnum.parse(player?.role);
-        socket.emit("role", getCharacter(player?.role as CharacterID));
+        socket.emit("role", getCharacter(player?.role as CharId));
       } catch (err) {
         console.log(err);
       }

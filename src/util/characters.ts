@@ -26,16 +26,23 @@ export const CharacterEnum = z.enum([
   "baron",
 ]);
 
-export type CharacterID = z.infer<typeof CharacterEnum>;
+export type CharId = z.infer<typeof CharacterEnum>;
+
+export type CharType =
+  | "townsfolk"
+  | "outsider"
+  | "minion"
+  | "demon"
+  | "unassigned";
 
 export type Character = {
-  id: CharacterID;
-  type: "townsfolk" | "outsider" | "minion" | "demon" | "unassigned";
+  id: CharId;
+  type: CharType;
   nightOrder?: number;
   firstNightOrder?: number;
 };
 
-const characters = new Map<CharacterID, Character>([
+const characters = new Map<CharId, Character>([
   ["unassigned", { id: "unassigned", type: "unassigned" }],
   [
     "washerwoman",
@@ -212,6 +219,6 @@ const characters = new Map<CharacterID, Character>([
   ],
 ]);
 
-export const getCharacter = (id: CharacterID): Character => {
+export const getCharacter = (id: CharId): Character => {
   return characters.get(id) as Character;
 };
