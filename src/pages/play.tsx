@@ -8,6 +8,7 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18n from "../../next-i18next.config.mjs";
 import { useTranslation } from "next-i18next";
 import { useSession, signIn, getSession } from "next-auth/react";
+import { ServerEmit, ClientEmit } from "../util/ws-enums";
 
 const socket = io();
 
@@ -23,17 +24,17 @@ const Play: NextPage = () => {
   const { t } = useTranslation();
 
   async function fetchRole() {
-    socket.emit("ready", (await getSession())?.user?.id);
+    socket.emit(ClientEmit.Ready, (await getSession())?.user?.id);
   }
 
   useEffect(() => {
-    socket.on("connect", fetchRole);
-    socket.on("disconnect", () => setRole(undefined));
-    socket.on("role", (role: Character) => setRole(role));
+    socket.on(ClientEmit.Connection, fetchRole);
+    socket.on(ClientEmit.Disconnect, () => setRole(undefined));
+    socket.on(ServerEmit.Role, (role: Character) => setRole(role));
     fetchRole();
     return () => {
-      socket.off("connect");
-      socket.off("disconnect");
+      socket.off(ClientEmit.Connection);
+      socket.off(ClientEmit.Disconnect);
     };
   }, []);
 
