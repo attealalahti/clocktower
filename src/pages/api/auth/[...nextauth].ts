@@ -26,8 +26,8 @@ export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
   providers: [
     CredentialsProvider({
-      name: "a name",
-      credentials: { name: { label: "Name", type: "text" } },
+      name: "credentials",
+      credentials: { name: { label: "name", type: "text" } },
       async authorize(credentials) {
         if (!credentials?.name) return null;
         const newPlayer = await prisma.player.create({
@@ -41,6 +41,9 @@ export const authOptions: NextAuthOptions = {
   ],
   session: {
     strategy: "jwt",
+  },
+  pages: {
+    signIn: "/auth/signin",
   },
 };
 
