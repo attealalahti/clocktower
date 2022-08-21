@@ -1,6 +1,6 @@
 import { NextPage } from "next";
 import { useEffect, useState } from "react";
-import io from "socket.io-client";
+import { Socket, io } from "socket.io-client";
 import { Character } from "../util/characters";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
@@ -8,10 +8,10 @@ import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18n from "../../next-i18next.config.mjs";
 import { useTranslation } from "next-i18next";
 import { useSession, signIn, getSession } from "next-auth/react";
-import { ServerEmit, ClientEmit } from "../util/ws-enums";
+import { ServerToClientEvents, ClientToServerEvents } from "../types/ws-types";
 import Header from "../components/Header";
 
-const socket = io();
+const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
 const Play: NextPage = () => {
   const { data: session } = useSession({
@@ -25,17 +25,21 @@ const Play: NextPage = () => {
   const { t } = useTranslation();
 
   async function fetchRole() {
-    socket.emit(ClientEmit.Ready, (await getSession())?.user?.id);
+    const currentSession = await getSession();
+    if (currentSession?.user?.id) {
+      socket.emit("ready", currentSession.user.id as unknown as number);
+    }
   }
 
   useEffect(() => {
-    socket.on(ClientEmit.Connection, fetchRole);
-    socket.on(ClientEmit.Disconnect, () => setRole(undefined));
-    socket.on(ServerEmit.Role, (role: Character) => setRole(role));
+    socket.on("connect", fetchRole);
+    socket.on("disconnect", () => setRole(undefined));
+    socket.on("role", (role: Character) => setRole(role));
     fetchRole();
     return () => {
-      socket.off(ClientEmit.Connection);
-      socket.off(ClientEmit.Disconnect);
+      socket.off("connect");
+      socket.off("disconnect");
+      socket.off("role");
     };
   }, []);
 
