@@ -5,48 +5,69 @@ import { useRouter } from "next/router";
 import { parse } from "url";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18n from "../../../next-i18next.config.mjs";
+import loadingAnimation from "../../../public/images/loading.svg";
+import Image from "next/image.js";
 
 const SignIn: NextPage = () => {
   const [name, setName] = useState<string>("");
+  const [signing, setSigning] = useState<boolean>(false);
   const router = useRouter();
   const { data: session } = useSession();
 
-  const getPreviousLocale = () => {
-    const callbackUrl = router.query.callbackUrl as string;
-    const parsedUrl = parse(callbackUrl, true);
-    const path = parsedUrl.pathname?.substring(1);
-    const firstPath = path?.substring(0, path?.indexOf("/"));
-    if (firstPath && router.locales?.includes(firstPath)) {
-      return firstPath;
-    } else {
-      return undefined;
-    }
-  };
+  useEffect(() => {
+    document.getElementById("name")?.focus();
+  }, []);
 
   useEffect(() => {
     if (session) {
-      const locale = getPreviousLocale() ?? "";
+      const callbackUrl = router.query.callbackUrl as string;
+      const parsedUrl = parse(callbackUrl, true);
+      const path = parsedUrl.pathname?.substring(1);
+      const firstPath = path?.substring(0, path?.indexOf("/"));
+      let locale = "";
+      if (firstPath && router.locales?.includes(firstPath)) {
+        locale = firstPath;
+      }
       router.replace(`/${locale}`);
     }
-  }, [session]);
+  }, [session, router]);
 
   const signInWithName: FormEventHandler<HTMLFormElement> = (e) => {
     e.preventDefault();
-    const callbackUrl = router.query.callbackUrl as string;
-    signIn("credentials", { name, callbackUrl });
+    if (!signing) {
+      setSigning(true);
+      const callbackUrl = router.query.callbackUrl as string;
+      signIn("credentials", { name, callbackUrl });
+    }
   };
-  return (
+  return signing ? (
     <main className="min-w-screen flex flex-auto flex-col items-center justify-center gap-20 text-center">
-      <form onSubmit={signInWithName}>
-        <label>
-          Name
-          <input
-            name="name"
-            type="text"
-            onChange={(e) => setName(e.target.value)}
-          />
+      <Image src={loadingAnimation} alt="loading" />
+    </main>
+  ) : (
+    <main className="min-w-screen flex flex-auto flex-col items-center justify-center gap-20 text-center">
+      <form
+        onSubmit={signInWithName}
+        className="flex flex-col items-center justify-center"
+      >
+        <label htmlFor="name" className="mb-3 p-4 text-2xl">
+          Enter your name:
         </label>
-        <button type="submit">Continue</button>
+        <input
+          className="rounded-md text-center text-2xl font-bold leading-loose text-black"
+          id="name"
+          name="name"
+          type="text"
+          autoComplete="off"
+          required={true}
+          onChange={(e) => setName(e.target.value)}
+        />
+        <button
+          type="submit"
+          className="mt-10 rounded-xl bg-white p-3 text-2xl text-black"
+        >
+          Continue
+        </button>
       </form>
     </main>
   );
