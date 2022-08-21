@@ -1,5 +1,4 @@
 import Head from "next/head";
-import Header from "./Header";
 
 type LayoutProps = {
   children: React.ReactNode;
@@ -16,7 +15,6 @@ const Layout = ({ children }: LayoutProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="min-w-screen mx-auto flex min-h-screen flex-col bg-gray-900 p-4 text-white">
-        <Header />
         {children}
       </div>
     </>
