@@ -10,6 +10,7 @@ import { useTranslation } from "next-i18next";
 import { useSession, signIn, getSession } from "next-auth/react";
 import { ServerToClientEvents, ClientToServerEvents } from "../types/ws-types";
 import ChangeLanguageButton from "../components/ChangeLanguageButton";
+import Link from "next/link";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -111,7 +112,7 @@ const Play: NextPage = () => {
             <button
               className={`${
                 showChar ? "p-3 text-base" : "p-4 text-xl"
-              } mt-7 rounded-lg bg-gray-300 font-bold text-black`}
+              } mt-7 rounded-lg border border-white  font-bold`}
               onClick={() => setShowChar((current) => !current)}
             >
               {showChar ? t("hide") : t("show")}
@@ -122,6 +123,11 @@ const Play: NextPage = () => {
         ) : (
           <Image src={loadingAnimation} alt="loading" />
         )}
+        <Link href="/cheatsheet">
+          <div className="mt-10 rounded-lg bg-white p-4 text-2xl font-bold text-black hover:cursor-pointer">
+            See all roles
+          </div>
+        </Link>
       </main>
     </>
   );
