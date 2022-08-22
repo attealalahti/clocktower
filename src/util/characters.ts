@@ -53,11 +53,27 @@ export const characters = new Map<CharId, Character>([
     },
   ],
   [
+    "librarian",
+    {
+      id: "librarian",
+      type: "townsfolk",
+      firstNightOrder: 2,
+    },
+  ],
+  [
     "investigator",
     {
       id: "investigator",
       type: "townsfolk",
       firstNightOrder: 3,
+    },
+  ],
+  [
+    "chef",
+    {
+      id: "chef",
+      type: "townsfolk",
+      firstNightOrder: 4,
     },
   ],
   [
@@ -70,11 +86,28 @@ export const characters = new Map<CharId, Character>([
     },
   ],
   [
+    "fortune_teller",
+    {
+      id: "fortune_teller",
+      type: "townsfolk",
+      firstNightOrder: 6,
+      nightOrder: 6,
+    },
+  ],
+  [
     "undertaker",
     {
       id: "undertaker",
       type: "townsfolk",
       nightOrder: 8,
+    },
+  ],
+  [
+    "monk",
+    {
+      id: "monk",
+      type: "townsfolk",
+      nightOrder: 1,
     },
   ],
   [
@@ -86,9 +119,23 @@ export const characters = new Map<CharId, Character>([
     },
   ],
   [
+    "virgin",
+    {
+      id: "virgin",
+      type: "townsfolk",
+    },
+  ],
+  [
     "slayer",
     {
       id: "slayer",
+      type: "townsfolk",
+    },
+  ],
+  [
+    "soldier",
+    {
+      id: "soldier",
       type: "townsfolk",
     },
   ],
@@ -109,9 +156,23 @@ export const characters = new Map<CharId, Character>([
     },
   ],
   [
+    "drunk",
+    {
+      id: "drunk",
+      type: "outsider",
+    },
+  ],
+  [
     "recluse",
     {
       id: "recluse",
+      type: "outsider",
+    },
+  ],
+  [
+    "saint",
+    {
+      id: "saint",
       type: "outsider",
     },
   ],
@@ -125,83 +186,6 @@ export const characters = new Map<CharId, Character>([
     },
   ],
   [
-    "scarlet_woman",
-    {
-      id: "scarlet_woman",
-      type: "minion",
-      nightOrder: 2,
-    },
-  ],
-  [
-    "imp",
-    {
-      id: "imp",
-      type: "demon",
-      nightOrder: 3,
-    },
-  ],
-  [
-    "librarian",
-    {
-      id: "librarian",
-      type: "townsfolk",
-      firstNightOrder: 2,
-    },
-  ],
-  [
-    "chef",
-    {
-      id: "chef",
-      type: "townsfolk",
-      firstNightOrder: 4,
-    },
-  ],
-  [
-    "fortune_teller",
-    {
-      id: "fortune_teller",
-      type: "townsfolk",
-      firstNightOrder: 6,
-      nightOrder: 6,
-    },
-  ],
-  [
-    "monk",
-    {
-      id: "monk",
-      type: "townsfolk",
-      nightOrder: 1,
-    },
-  ],
-  [
-    "virgin",
-    {
-      id: "virgin",
-      type: "townsfolk",
-    },
-  ],
-  [
-    "soldier",
-    {
-      id: "soldier",
-      type: "townsfolk",
-    },
-  ],
-  [
-    "drunk",
-    {
-      id: "drunk",
-      type: "outsider",
-    },
-  ],
-  [
-    "saint",
-    {
-      id: "saint",
-      type: "outsider",
-    },
-  ],
-  [
     "spy",
     {
       id: "spy",
@@ -211,10 +195,26 @@ export const characters = new Map<CharId, Character>([
     },
   ],
   [
+    "scarlet_woman",
+    {
+      id: "scarlet_woman",
+      type: "minion",
+      nightOrder: 2,
+    },
+  ],
+  [
     "baron",
     {
       id: "baron",
       type: "minion",
+    },
+  ],
+  [
+    "imp",
+    {
+      id: "imp",
+      type: "demon",
+      nightOrder: 3,
     },
   ],
 ]);
