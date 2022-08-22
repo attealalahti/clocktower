@@ -9,7 +9,7 @@ import i18n from "../../next-i18next.config.mjs";
 import { useTranslation } from "next-i18next";
 import { useSession, signIn, getSession } from "next-auth/react";
 import { ServerToClientEvents, ClientToServerEvents } from "../types/ws-types";
-import Header from "../components/Header";
+import ChangeLanguageButton from "../components/ChangeLanguageButton";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -45,7 +45,12 @@ const Play: NextPage = () => {
 
   return (
     <>
-      <Header />
+      <div className="flex flex-1 flex-grow-0 flex-row justify-items-center gap-3 text-center align-middle font-serif">
+        <button className="m-auto ml-0 rounded-lg border border-white p-3 font-sans text-lg hover:cursor-pointer hover:bg-white hover:text-black">
+          Change your name
+        </button>
+        <ChangeLanguageButton />
+      </div>
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {role && session && role.type !== "unassigned" ? (
           <>
