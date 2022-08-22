@@ -5,7 +5,7 @@ import i18n from "../../next-i18next.config.mjs";
 import { signIn, useSession } from "next-auth/react";
 import { useRouter } from "next/router.js";
 import Header from "../components/Header";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const Home: NextPage = () => {
   const { t } = useTranslation();
@@ -24,6 +24,12 @@ const Home: NextPage = () => {
       }
     }
   };
+
+  useEffect(() => {
+    if (!session) {
+      setSigning(false);
+    }
+  }, [session]);
 
   return (
     <>
