@@ -133,7 +133,7 @@ const Play: NextPage = () => {
   );
 };
 
-export const getServerSideProps = async ({ locale }: { locale: string }) => ({
+export const getStaticProps = async ({ locale }: { locale: string }) => ({
   props: {
     ...(await serverSideTranslations(locale, ["common"], { i18n })),
   },

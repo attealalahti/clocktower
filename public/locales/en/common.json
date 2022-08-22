@@ -10,6 +10,12 @@
   "warning": "Do not show this screen to other players",
   "show": "Show your role",
   "hide": "Hide your role",
+  "cs": {
+    "characters": "Characters",
+    "nightOrder": "Night Order",
+    "firstNight": "On the first night:",
+    "otherNights": "On other nights:"
+  },
   "charTypes": {
     "townsfolk": "Townsfolk",
     "outsider": "Outsider",

@@ -42,7 +42,7 @@ export type Character = {
   firstNightOrder?: number;
 };
 
-const characters = new Map<CharId, Character>([
+export const characters = new Map<CharId, Character>([
   ["unassigned", { id: "unassigned", type: "unassigned" }],
   [
     "washerwoman",

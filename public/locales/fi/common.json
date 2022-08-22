@@ -10,6 +10,12 @@
   "warning": "Älä näytä tätä ruutua muille pelaajille",
   "show": "Näytä roolisi",
   "hide": "Piilota roolisi",
+  "cs": {
+    "characters": "Hahmot",
+    "nightOrder": "Yön järjestys",
+    "firstNight": "Ensimmäisenä yönä:",
+    "otherNights": "Muina öinä:"
+  },
   "charTypes": {
     "townsfolk": "Kyläläinen",
     "outsider": "Ulkopuolinen",
