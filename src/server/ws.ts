@@ -12,6 +12,7 @@ import {
 
 const prisma = new PrismaClient();
 const idSchema = z.number();
+const nameSchema = z.string();
 
 export default function ws(server: Server) {
   const io = new SocketIOServer<
@@ -29,7 +30,21 @@ export default function ws(server: Server) {
         idSchema.parse(id);
         const player = await prisma.player.findFirst({ where: { id } });
         CharIdSchema.parse(player?.role);
-        socket.emit("role", getCharacter(player?.role as CharId));
+        nameSchema.parse(player?.name);
+        const data = {
+          name: player?.name as string,
+          role: getCharacter(player?.role as CharId),
+        };
+        socket.emit("data", data);
+      } catch (err) {
+        console.log(err);
+      }
+    });
+    socket.on("changeName", async (name: string, id: number) => {
+      try {
+        nameSchema.parse(name);
+        idSchema.parse(id);
+        await prisma.player.update({ data: { name }, where: { id } });
       } catch (err) {
         console.log(err);
       }

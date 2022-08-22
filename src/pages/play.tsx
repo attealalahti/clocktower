@@ -21,6 +21,7 @@ const Play: NextPage = () => {
     },
   });
   const [role, setRole] = useState<Character | undefined>(undefined);
+  const [name, setName] = useState<string>("");
   const [showChar, setShowChar] = useState<boolean>(false);
   const { t } = useTranslation();
 
@@ -34,22 +35,44 @@ const Play: NextPage = () => {
   useEffect(() => {
     socket.on("connect", fetchRole);
     socket.on("disconnect", () => setRole(undefined));
-    socket.on("role", (role: Character) => setRole(role));
+    socket.on("data", ({ name, role }) => {
+      setName(name);
+      setRole(role);
+    });
     fetchRole();
     return () => {
       socket.off("connect");
       socket.off("disconnect");
-      socket.off("role");
+      socket.off("data");
     };
   }, []);
+
+  const changeName = async () => {
+    const newName = prompt(t("enterName"), "");
+    const currentSession = await getSession();
+    if (newName && newName !== "" && currentSession?.user?.id) {
+      socket.emit(
+        "changeName",
+        newName,
+        currentSession.user.id as unknown as number
+      );
+      setName(newName);
+    }
+  };
 
   return (
     <>
       <div className="flex flex-1 flex-grow-0 flex-row justify-items-center gap-3 text-center align-middle font-serif">
-        <button className="m-auto ml-0 rounded-lg border border-white p-3 font-sans text-lg hover:cursor-pointer hover:bg-white hover:text-black">
-          Change your name
+        <button
+          onClick={changeName}
+          className="m-auto ml-0 rounded-lg border border-white p-3 font-sans text-lg hover:cursor-pointer hover:bg-white hover:text-black"
+        >
+          {t("changeName")}
         </button>
         <ChangeLanguageButton />
+      </div>
+      <div className="mt-3 flex flex-1 flex-grow-0 flex-row justify-items-center gap-3 text-center align-middle font-serif">
+        <div className="m-auto font-serif text-xl">{name}</div>
       </div>
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {role && session && role.type !== "unassigned" ? (

@@ -1,11 +1,12 @@
 import type { Character } from "../util/characters";
 
 export interface ServerToClientEvents {
-  role: (role: Character) => void;
+  data: ({ name, role }: { name: string; role: Character }) => void;
 }
 
 export interface ClientToServerEvents {
   ready: (id: number) => void;
+  changeName: (name: string, id: number) => void;
 }
 
 export interface InterServerEvents {
