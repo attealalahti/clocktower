@@ -7,6 +7,8 @@ import i18n from "../../next-i18next.config.mjs";
 import Header from "../components/Header";
 import { ClientToServerEvents, ServerToClientEvents } from "../types/ws-types";
 import { Player } from "../types/api-types";
+import Image from "next/image";
+import loadingAnimation from "../../public/images/loading.svg";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -49,11 +51,17 @@ const Storyteller: NextPage = () => {
         {dataState === "loaded" ? (
           <div>data loaded</div>
         ) : dataState === "loading" ? (
-          <div>loading</div>
+          <Image alt="loading" src={loadingAnimation} />
         ) : (
-          <div>error</div>
+          <div className="border border-red-500 p-4 text-lg text-red-500">
+            An error occurred.
+          </div>
         )}
-        {disconnected && <div>disconnected</div>}
+        {disconnected && (
+          <div className="mt-4 border border-red-500 p-4 text-lg text-red-500">
+            You are disconnected. Live updates have stopped.
+          </div>
+        )}
       </main>
     </>
   );
