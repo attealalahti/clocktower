@@ -28,12 +28,13 @@ export default function ws(server: Server) {
     socket.on("ready", async (id: number) => {
       try {
         idSchema.parse(id);
+        // socket.join(id.toString());
         const player = await prisma.player.findFirst({ where: { id } });
         CharIdSchema.parse(player?.role);
         nameSchema.parse(player?.name);
         const data = {
           name: player?.name as string,
-          role: getCharacter(player?.role as CharId),
+          character: getCharacter(player?.role as CharId),
         };
         socket.emit("data", data);
       } catch (err) {

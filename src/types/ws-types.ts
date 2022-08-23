@@ -1,7 +1,8 @@
-import type { Character } from "../util/characters";
+import { Character } from "../util/characters";
 
 export interface ServerToClientEvents {
-  data: ({ name, role }: { name: string; role: Character }) => void;
+  data: (data: { name: string; character: Character }) => void;
+  playerDataChanged: () => void;
 }
 
 export interface ClientToServerEvents {

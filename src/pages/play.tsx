@@ -36,9 +36,9 @@ const Play: NextPage = () => {
   useEffect(() => {
     socket.on("connect", fetchRole);
     socket.on("disconnect", () => setRole(undefined));
-    socket.on("data", ({ name, role }) => {
+    socket.on("data", ({ name, character }) => {
       setName(name);
-      setRole(role);
+      setRole(character);
     });
     fetchRole();
     return () => {
