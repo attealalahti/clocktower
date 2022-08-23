@@ -3,6 +3,7 @@ import { useTranslation } from "next-i18next";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import Image from "next/image.js";
 import i18n from "../../next-i18next.config.mjs";
+import CharacterInfoByType from "../components/CharacterInfoByType";
 import Header from "../components/Header";
 import { characters as characterMap } from "../util/characters";
 
@@ -32,28 +33,10 @@ const CheatSheet: NextPage = () => {
       <Header />
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         <h2 className="mt-3 font-serif text-xl">{t("cs.characters")}</h2>
-        {characters.map(([id]) => (
-          <div
-            key={id}
-            className="my-3 flex w-full flex-row justify-center rounded-lg p-3 align-middle shadow-sm shadow-white lg:max-w-2xl"
-          >
-            <div className="m-auto max-w-md flex-1 flex-grow-0">
-              <div className="mb-3 font-serif">
-                {t(`characters.${id}.name`)}
-              </div>
-              <Image
-                src={`/images/${id}.webp`}
-                alt={t(`characters.${id}.name`)}
-                width={100}
-                height={70}
-                layout={"fixed"}
-              />
-            </div>
-            <div className="ml-3 flex flex-auto flex-col justify-center align-middle">
-              <div>{t(`characters.${id}.power`)}</div>
-            </div>
-          </div>
-        ))}
+        <CharacterInfoByType type="townsfolk" characters={characters} />
+        <CharacterInfoByType type="outsider" characters={characters} />
+        <CharacterInfoByType type="minion" characters={characters} />
+        <CharacterInfoByType type="demon" characters={characters} />
         <h2 className="my-3 font-serif text-xl">{t("cs.nightOrder")}</h2>
         <div className="flex flex-row flex-wrap gap-5">
           <div className="mx-auto">

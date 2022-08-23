@@ -14,7 +14,11 @@
     "characters": "Hahmot",
     "nightOrder": "Yön järjestys",
     "firstNight": "Ensimmäisenä yönä:",
-    "otherNights": "Muina öinä:"
+    "otherNights": "Muina öinä:",
+    "townsfolk": "Kyläläiset",
+    "outsider": "Ulkopuoliset",
+    "minion": "Kätyrit",
+    "demon": "Demonit"
   },
   "charTypes": {
     "townsfolk": "Kyläläinen",

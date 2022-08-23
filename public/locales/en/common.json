@@ -14,7 +14,11 @@
     "characters": "Characters",
     "nightOrder": "Night Order",
     "firstNight": "On the first night:",
-    "otherNights": "On other nights:"
+    "otherNights": "On other nights:",
+    "townsfolk": "Townsfolk",
+    "outsider": "Outsiders",
+    "minion": "Minions",
+    "demon": "Demons"
   },
   "charTypes": {
     "townsfolk": "Townsfolk",
