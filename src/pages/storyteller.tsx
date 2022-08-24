@@ -33,7 +33,10 @@ const Storyteller: NextPage = () => {
   }
 
   useEffect(() => {
-    socket.on("connect", () => setDisconnected(false));
+    socket.on("connect", () => {
+      setDisconnected(false);
+      fetchPlayerData();
+    });
     socket.on("disconnect", () => setDisconnected(true));
     socket.on("playerDataChanged", fetchPlayerData);
     fetchPlayerData();
@@ -49,7 +52,37 @@ const Storyteller: NextPage = () => {
       <Header />
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {dataState === "loaded" ? (
-          <div>data loaded</div>
+          players.map(({ name, character }, index) => (
+            <div
+              key={index}
+              className="mb-2 w-full rounded-lg shadow-sm shadow-white"
+            >
+              <div className="flex w-full flex-row justify-center align-middle">
+                <button className="m-auto flex-1 flex-grow-0 p-2">/\</button>
+                <button className="flex-2 m-auto flex-grow-0 p-2">\/</button>
+                <div className="m-auto flex-auto">{name}</div>
+                <button className="flex-4 flex w-28 flex-grow-0 flex-col justify-center align-middle">
+                  <div
+                    className={`m-auto flex justify-center align-middle ${
+                      character.type === "unassigned" && "hidden"
+                    }`}
+                  >
+                    <Image
+                      src={`/images/${character.id}.webp`}
+                      width={59}
+                      height={41}
+                      layout={"fixed"}
+                      alt={character.id}
+                    />
+                  </div>
+                  <div className="m-auto">{character.id}</div>
+                </button>
+              </div>
+              <div className="flex flex-row flex-wrap">
+                <button className="p-2">Add token</button>
+              </div>
+            </div>
+          ))
         ) : dataState === "loading" ? (
           <Image alt="loading" src={loadingAnimation} />
         ) : (

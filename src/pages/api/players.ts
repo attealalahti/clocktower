@@ -5,12 +5,16 @@ import { Character, characters, CharId } from "../../util/characters";
 
 const players = async (req: NextApiRequest, res: NextApiResponse) => {
   const players = await prisma.player.findMany();
-  const playersWithCharacters: Player[] = players.map((player) => {
-    return {
-      name: player.name,
-      character: characters.get(player.role as CharId) as Character,
-    };
-  });
+  const playersWithCharacters: Player[] = players.map(
+    ({ name, order, stRole }) => {
+      return {
+        name,
+        order,
+        character: characters.get(stRole as CharId) as Character,
+      };
+    }
+  );
+  playersWithCharacters.sort((a, b) => a.order - b.order);
   res.status(200).json(playersWithCharacters);
 };
 
