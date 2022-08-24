@@ -78,13 +78,33 @@ const Storyteller: NextPage = () => {
     }
   };
 
+  const swapPlayers = (index: number, otherIndex: number) => {
+    const newPlayers = [...players];
+    if (otherIndex < 0) {
+      otherIndex = newPlayers.length - 1;
+    }
+    if (otherIndex >= newPlayers.length) {
+      otherIndex = 0;
+    }
+    const player1 = newPlayers[index] as Player;
+    const player2 = newPlayers[otherIndex] as Player;
+    const player1Order = player1.order;
+    player1.order = player2.order;
+    player2.order = player1Order;
+    newPlayers[otherIndex] = player1;
+    newPlayers[index] = player2;
+    setPlayers(newPlayers);
+    sendPlayerData(player1.id, newPlayers);
+    sendPlayerData(player2.id, newPlayers);
+  };
+
   return (
     <>
       <Header />
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {dataState === "loaded" ? (
           <div className="w-full">
-            {players.map(({ id, name, character, dead }) => (
+            {players.map(({ id, name, character, dead }, index) => (
               <div
                 key={id}
                 className={`mt-2 w-full rounded-lg shadow-sm shadow-white ${
@@ -92,8 +112,18 @@ const Storyteller: NextPage = () => {
                 }`}
               >
                 <div className="flex w-full flex-row justify-center align-middle">
-                  <button className="m-auto flex-1 flex-grow-0 p-2">/\</button>
-                  <button className="flex-2 m-auto flex-grow-0 p-2">\/</button>
+                  <button
+                    onClick={() => swapPlayers(index, index - 1)}
+                    className="m-auto flex-1 flex-grow-0 p-2"
+                  >
+                    /\
+                  </button>
+                  <button
+                    onClick={() => swapPlayers(index, index + 1)}
+                    className="flex-2 m-auto flex-grow-0 p-2"
+                  >
+                    \/
+                  </button>
                   <button
                     onClick={() => toggleDead(id)}
                     className={`m-auto flex-auto font-serif text-lg ${

@@ -20,6 +20,7 @@ const player = async (req: NextApiRequest, res: NextApiResponse) => {
       },
       data: {
         name: req.body.name,
+        order: req.body.order,
         stRole: req.body.stRole,
         tokens: req.body.tokens,
         dead: req.body.dead,
