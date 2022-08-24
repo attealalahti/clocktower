@@ -9,6 +9,7 @@ import { ClientToServerEvents, ServerToClientEvents } from "../types/ws-types";
 import { Player } from "../types/api-types";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
+import { PlayerToServer } from "../types/api-types";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -32,6 +33,25 @@ const Storyteller: NextPage = () => {
     }
   }
 
+  async function sendPlayerData(id: number, updatedPlayers: Player[]) {
+    try {
+      const playerToSend = updatedPlayers.find((player) => player.id === id);
+      if (playerToSend) {
+        const data: PlayerToServer = {
+          name: playerToSend.name,
+          order: playerToSend.order,
+          stRole: playerToSend.character.id,
+          tokens: playerToSend.tokens,
+          dead: playerToSend.dead,
+        };
+        await axios.patch(`/api/players/${id}`, data);
+      }
+    } catch (err) {
+      setDataState("error");
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     socket.on("connect", () => {
       setDisconnected(false);
@@ -47,42 +67,66 @@ const Storyteller: NextPage = () => {
     };
   }, []);
 
+  const toggleDead = (id: number) => {
+    const newPlayers = [...players];
+    const index = newPlayers.findIndex((player) => player.id === id);
+    if (newPlayers[index] !== undefined) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      newPlayers[index]!.dead = !newPlayers[index]!.dead;
+      setPlayers(newPlayers);
+      sendPlayerData(id, newPlayers);
+    }
+  };
+
   return (
     <>
       <Header />
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {dataState === "loaded" ? (
-          players.map(({ name, character }, index) => (
-            <div
-              key={index}
-              className="mb-2 w-full rounded-lg shadow-sm shadow-white"
-            >
-              <div className="flex w-full flex-row justify-center align-middle">
-                <button className="m-auto flex-1 flex-grow-0 p-2">/\</button>
-                <button className="flex-2 m-auto flex-grow-0 p-2">\/</button>
-                <div className="m-auto flex-auto">{name}</div>
-                <button className="flex-4 flex w-28 flex-grow-0 flex-col justify-center align-middle">
-                  <div
-                    className={`m-auto flex justify-center align-middle ${
-                      character.type === "unassigned" && "hidden"
+          <div className="w-full">
+            {players.map(({ id, name, character, dead }) => (
+              <div
+                key={id}
+                className={`mt-2 w-full rounded-lg shadow-sm shadow-white ${
+                  dead && "opacity-50"
+                }`}
+              >
+                <div className="flex w-full flex-row justify-center align-middle">
+                  <button className="m-auto flex-1 flex-grow-0 p-2">/\</button>
+                  <button className="flex-2 m-auto flex-grow-0 p-2">\/</button>
+                  <button
+                    onClick={() => toggleDead(id)}
+                    className={`m-auto flex-auto font-serif text-lg ${
+                      dead && "line-through"
                     }`}
                   >
-                    <Image
-                      src={`/images/${character.id}.webp`}
-                      width={59}
-                      height={41}
-                      layout={"fixed"}
-                      alt={character.id}
-                    />
-                  </div>
-                  <div className="m-auto">{character.id}</div>
-                </button>
+                    {name}
+                  </button>
+                  <button className="flex-4 flex w-28 flex-grow-0 flex-col justify-center align-middle">
+                    <div
+                      className={`m-auto mt-2 flex justify-center align-middle ${
+                        character.type === "unassigned" && "hidden"
+                      }`}
+                    >
+                      <Image
+                        src={`/images/${character.id}.webp`}
+                        width={59}
+                        height={41}
+                        layout={"fixed"}
+                        alt={character.id}
+                      />
+                    </div>
+                    <div className="m-auto font-serif">{character.id}</div>
+                  </button>
+                </div>
+                <div className="flex flex-row flex-wrap p-1">
+                  <button className="rounded-lg bg-blue-300 p-1 text-black">
+                    Add token
+                  </button>
+                </div>
               </div>
-              <div className="flex flex-row flex-wrap">
-                <button className="p-2">Add token</button>
-              </div>
-            </div>
-          ))
+            ))}
+          </div>
         ) : dataState === "loading" ? (
           <Image alt="loading" src={loadingAnimation} />
         ) : (

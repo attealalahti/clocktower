@@ -56,9 +56,16 @@ model VerificationToken {
 }
 
 model player {
-  id      Int    @id @default(autoincrement())
-  name    String
-  role    String @default("unassigned")
-  order   Int    @default(autoincrement())
-  stRole String @default("unassigned") @map("st_role")
+  id     Int     @id @default(autoincrement())
+  name   String
+  role   String  @default("unassigned")
+  order  Int     @default(autoincrement())
+  stRole String  @default("unassigned") @map("st_role")
+  tokens Json?   @db.Json
+  dead   Boolean @default(false)
+}
+
+model test {
+  id     Int   @id @default(autoincrement())
+  tokens Json? @db.Json
 }
