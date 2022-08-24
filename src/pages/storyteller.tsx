@@ -10,6 +10,8 @@ import { Player } from "../types/api-types";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
 import { PlayerToServer } from "../types/api-types";
+import upArrow from "../../public/images/arrow_up.svg";
+import downArrow from "../../public/images/arrow_down.svg";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -114,15 +116,27 @@ const Storyteller: NextPage = () => {
                 <div className="flex w-full flex-row justify-center align-middle">
                   <button
                     onClick={() => swapPlayers(index, index - 1)}
-                    className="m-auto flex-1 flex-grow-0 p-2"
+                    className="m-auto flex flex-1 flex-grow-0 justify-center p-2 pr-0 align-middle"
                   >
-                    /\
+                    <Image
+                      src={upArrow}
+                      width={30}
+                      height={30}
+                      layout="fixed"
+                      alt="up"
+                    />
                   </button>
                   <button
                     onClick={() => swapPlayers(index, index + 1)}
-                    className="flex-2 m-auto flex-grow-0 p-2"
+                    className="flex-2 m-auto flex flex-grow-0 justify-center p-2 pl-0 align-middle"
                   >
-                    \/
+                    <Image
+                      src={downArrow}
+                      width={30}
+                      height={30}
+                      layout="fixed"
+                      alt="down"
+                    />
                   </button>
                   <button
                     onClick={() => toggleDead(id)}
