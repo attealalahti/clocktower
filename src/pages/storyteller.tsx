@@ -12,6 +12,7 @@ import loadingAnimation from "../../public/images/loading.svg";
 import { PlayerToServer } from "../types/api-types";
 import upArrow from "../../public/images/arrow_up.svg";
 import downArrow from "../../public/images/arrow_down.svg";
+import { useTranslation } from "next-i18next";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -21,6 +22,7 @@ const Storyteller: NextPage = () => {
     "loading"
   );
   const [disconnected, setDisconnected] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   async function fetchPlayerData() {
     try {
@@ -123,7 +125,7 @@ const Storyteller: NextPage = () => {
                       width={30}
                       height={30}
                       layout="fixed"
-                      alt="up"
+                      alt={t("st.upButton")}
                     />
                   </button>
                   <button
@@ -135,7 +137,7 @@ const Storyteller: NextPage = () => {
                       width={30}
                       height={30}
                       layout="fixed"
-                      alt="down"
+                      alt={t("st.downButton")}
                     />
                   </button>
                   <button
@@ -157,15 +159,17 @@ const Storyteller: NextPage = () => {
                         width={59}
                         height={41}
                         layout={"fixed"}
-                        alt={character.id}
+                        alt={t(`characters.${character.id}.name`)}
                       />
                     </div>
-                    <div className="m-auto font-serif">{character.id}</div>
+                    <div className="m-auto font-serif">
+                      {t(`characters.${character.id}.name`)}
+                    </div>
                   </button>
                 </div>
                 <div className="flex flex-row flex-wrap p-1">
                   <button className="rounded-lg bg-blue-300 p-1 text-black">
-                    Add token
+                    {t("st.addToken")}
                   </button>
                 </div>
               </div>
@@ -175,12 +179,12 @@ const Storyteller: NextPage = () => {
           <Image alt="loading" src={loadingAnimation} />
         ) : (
           <div className="border border-red-500 p-4 text-lg text-red-500">
-            An error occurred.
+            {t("st.error")}
           </div>
         )}
         {disconnected && (
           <div className="mt-4 border border-red-500 p-4 text-lg text-red-500">
-            You are disconnected. Live updates have stopped.
+            {t("st.disconnected")}
           </div>
         )}
       </main>

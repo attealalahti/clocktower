@@ -20,6 +20,13 @@
     "minion": "Minions",
     "demon": "Demons"
   },
+  "st": {
+    "downButton": "Move player up",
+    "upButton": "Move player down",
+    "addToken": "Add token",
+    "error": "An error occurred",
+    "disconnected": "You are disconnected. Live updates have stopped."
+  },
   "charTypes": {
     "townsfolk": "Townsfolk",
     "outsider": "Outsider",
@@ -27,6 +34,10 @@
     "demon": "Demon"
   },
   "characters": {
+    "unassigned": {
+      "name": "No character",
+      "power": ""
+    },
     "washerwoman": {
       "name": "Washerwoman",
       "power": "You start knowing that 1 of 2 players is a particular Townsfolk"

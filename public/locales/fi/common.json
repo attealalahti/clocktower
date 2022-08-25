@@ -20,6 +20,13 @@
     "minion": "Kätyrit",
     "demon": "Demonit"
   },
+  "st": {
+    "downButton": "Siirrä pelaajaa ylös",
+    "upButton": "Siirrä pelaajaa alas",
+    "addToken": "Lisää merkki",
+    "error": "Tapahtui virhe",
+    "disconnected": "Yhteys katkesi. Suorat päivitykset ovat pysähtyneet."
+  },
   "charTypes": {
     "townsfolk": "Kyläläinen",
     "outsider": "Ulkopuolinen",
@@ -27,6 +34,10 @@
     "demon": "Demoni"
   },
   "characters": {
+    "unassigned": {
+      "name": "Ei hahmoa",
+      "power": ""
+    },
     "washerwoman": {
       "name": "Pyykkäri",
       "power": "Aloitat tietäen, että yksi kahdesta pelaajasta on tietty Kyläläinen."
