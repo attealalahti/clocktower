@@ -14,7 +14,10 @@ import upArrow from "../../public/images/arrow_up.svg";
 import downArrow from "../../public/images/arrow_down.svg";
 import { useTranslation } from "next-i18next";
 import Modal from "../components/Modal";
+import { CharId, characters as characterMap } from "../util/characters";
 
+characterMap.delete("unassigned");
+const characters = Array.from(characterMap);
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
 const Storyteller: NextPage = () => {
@@ -25,6 +28,7 @@ const Storyteller: NextPage = () => {
   const [disconnected, setDisconnected] = useState<boolean>(false);
   const { t } = useTranslation();
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
+  const [selectedChars, setSelectedChars] = useState<CharId[]>([]);
 
   async function fetchPlayerData() {
     try {
@@ -32,6 +36,10 @@ const Storyteller: NextPage = () => {
         "/api/players"
       );
       setPlayers(newPlayers);
+      const newSelectedChars: CharId[] = newPlayers.map(
+        ({ character }) => character.id
+      );
+      setSelectedChars(newSelectedChars);
       setDataState("loaded");
     } catch (err) {
       setDataState("error");
@@ -82,6 +90,24 @@ const Storyteller: NextPage = () => {
       setPlayers(newPlayers);
       sendPlayerData(id, newPlayers);
     }
+  };
+
+  const toggleCharSelected = (id: CharId) => {
+    const newSelectedChars = [...selectedChars];
+    const index = newSelectedChars.findIndex((char) => char === id);
+    if (index !== -1) {
+      newSelectedChars.splice(index, 1);
+    } else {
+      newSelectedChars.push(id);
+    }
+    setSelectedChars(newSelectedChars);
+  };
+
+  const resetSelectedChars = () => {
+    const newSelectedChars: CharId[] = players.map(
+      ({ character }) => character.id
+    );
+    setSelectedChars(newSelectedChars);
   };
 
   const swapPlayers = (index: number, otherIndex: number) => {
@@ -183,19 +209,46 @@ const Storyteller: NextPage = () => {
               Select Characters
             </button>
             <Modal open={charSelectOpen}>
-              <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white align-middle text-white">
+              <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
                 <div className="flex-auto overflow-scroll border-b border-white">
-                  chars go here
+                  <div className="text-center">Townsfolk (1/2)</div>
+                  <div className="flex flex-row flex-wrap justify-center gap-2 align-middle">
+                    {characters.map(([id]) => (
+                      <button
+                        onClick={() => toggleCharSelected(id)}
+                        key={id}
+                        className={`${
+                          !selectedChars.includes(id) ? "opacity-50" : ""
+                        } flex h-32 w-32 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle`}
+                      >
+                        <div className="mx-auto flex justify-center align-middle">
+                          <Image
+                            src={`/images/${id}.webp`}
+                            width={71}
+                            height={50}
+                            layout="fixed"
+                            alt={t(`characters.${id}.name`)}
+                          />
+                        </div>
+                        <div className="mx-auto flex-grow-0 text-center font-serif text-black">
+                          {t(`characters.${id}.name`)}
+                        </div>
+                      </button>
+                    ))}
+                  </div>
                 </div>
-                <div className="flex-2 my-2 flex flex-grow-0 flex-row justify-center gap-3 align-middle">
+                <div className="flex-2 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle">
                   <button className="rounded-xl border border-white bg-black p-4">
                     Shuffle
                   </button>
                   <button className="rounded-xl border border-white bg-black p-4">
-                    Assign
+                    Assign Randomly
                   </button>
                   <button
-                    onClick={() => setCharSelectOpen(false)}
+                    onClick={() => {
+                      setCharSelectOpen(false);
+                      resetSelectedChars();
+                    }}
                     className="rounded-xl border border-white bg-black p-4"
                   >
                     Cancel
