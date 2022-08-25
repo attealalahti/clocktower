@@ -18,11 +18,22 @@ import {
   CharId,
   characters as characterMap,
   modifiesGameSetup,
+  CharType,
+  Character,
 } from "../util/characters";
 import CharacterSelectByType from "../components/CharacterSelectByType";
 
 characterMap.delete("unassigned");
 const characters = Array.from(characterMap);
+
+function getCharsOfType(type: CharType): [CharId, Character][] {
+  return characters.filter(([, char]) => char.type === type);
+}
+const townsfolk = getCharsOfType("townsfolk");
+const outsiders = getCharsOfType("outsider");
+const minions = getCharsOfType("minion");
+const demons = getCharsOfType("demon");
+
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
 const Storyteller: NextPage = () => {
@@ -97,6 +108,50 @@ const Storyteller: NextPage = () => {
     }
   };
 
+  function getMaxOfType(type: CharType): number {
+    const playerCount = players.length;
+    switch (type) {
+      case "townsfolk":
+        if (playerCount <= 6) {
+          return 3;
+        } else if (playerCount <= 9) {
+          return 5;
+        } else if (playerCount <= 12) {
+          return 7;
+        } else {
+          return 9;
+        }
+      case "outsider":
+        if (
+          playerCount <= 5 ||
+          playerCount === 7 ||
+          playerCount === 10 ||
+          playerCount === 13
+        ) {
+          return 0;
+        } else if (
+          playerCount === 6 ||
+          playerCount === 8 ||
+          playerCount === 11 ||
+          playerCount === 14
+        ) {
+          return 1;
+        } else {
+          return 2;
+        }
+      case "minion":
+        if (playerCount <= 9) {
+          return 1;
+        } else if (playerCount <= 12) {
+          return 2;
+        } else {
+          return 3;
+        }
+      default:
+        return 1;
+    }
+  }
+
   const toggleCharSelected = (id: CharId) => {
     const newSelectedChars = [...selectedChars];
     const index = newSelectedChars.findIndex((char) => char === id);
@@ -114,6 +169,32 @@ const Storyteller: NextPage = () => {
     );
     setSelectedChars(newSelectedChars);
   };
+
+  const shuffleCharSelect = () => {
+    let charsToSelect = new Set<CharId>();
+    charsToSelect = addCharsOfTypeToSet("townsfolk", townsfolk, charsToSelect);
+    charsToSelect = addCharsOfTypeToSet("outsider", outsiders, charsToSelect);
+    charsToSelect = addCharsOfTypeToSet("minion", minions, charsToSelect);
+    charsToSelect = addCharsOfTypeToSet("demon", demons, charsToSelect);
+    const newSelectedChars = Array.from(charsToSelect);
+    setSelectedChars(newSelectedChars);
+  };
+
+  function addCharsOfTypeToSet(
+    type: CharType,
+    charsOfType: [CharId, Character][],
+    set: Set<CharId>
+  ) {
+    const sizeBeforeAdditions = set.size;
+    while (set.size < getMaxOfType(type) + sizeBeforeAdditions) {
+      const randomIndex = Math.floor(Math.random() * charsOfType.length);
+      if (charsOfType[randomIndex] !== undefined) {
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        set.add(charsOfType[randomIndex]![0]);
+      }
+    }
+    return set;
+  }
 
   const swapPlayers = (index: number, otherIndex: number) => {
     const newPlayers = [...players];
@@ -227,31 +308,31 @@ const Storyteller: NextPage = () => {
               <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
                 <div className="flex-auto overflow-scroll border-b border-white">
                   <CharacterSelectByType
-                    characters={characters}
+                    characters={townsfolk}
                     selectedChars={selectedChars}
                     type="townsfolk"
-                    playerCount={players.length}
+                    maxOfType={getMaxOfType("townsfolk")}
                     onSelect={toggleCharSelected}
                   />
                   <CharacterSelectByType
-                    characters={characters}
+                    characters={outsiders}
                     selectedChars={selectedChars}
                     type="outsider"
-                    playerCount={players.length}
+                    maxOfType={getMaxOfType("outsider")}
                     onSelect={toggleCharSelected}
                   />
                   <CharacterSelectByType
-                    characters={characters}
+                    characters={minions}
                     selectedChars={selectedChars}
                     type="minion"
-                    playerCount={players.length}
+                    maxOfType={getMaxOfType("minion")}
                     onSelect={toggleCharSelected}
                   />
                   <CharacterSelectByType
-                    characters={characters}
+                    characters={demons}
                     selectedChars={selectedChars}
                     type="demon"
-                    playerCount={players.length}
+                    maxOfType={getMaxOfType("demon")}
                     onSelect={toggleCharSelected}
                   />
                 </div>
@@ -263,7 +344,10 @@ const Storyteller: NextPage = () => {
                   >
                     Selected characters modify game setup!
                   </div>
-                  <button className="rounded-xl border border-white bg-black p-4">
+                  <button
+                    className="rounded-xl border border-white bg-black p-4"
+                    onClick={shuffleCharSelect}
+                  >
                     Shuffle
                   </button>
                   <button className="rounded-xl border border-white bg-black p-4">

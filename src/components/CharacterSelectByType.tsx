@@ -12,68 +12,21 @@ type CharacterSelectByTypeProps = {
   characters: [CharId, Character][];
   selectedChars: CharId[];
   type: CharType;
-  playerCount: number;
+  maxOfType: number;
   onSelect: (id: CharId) => void;
 };
 const CharacterSelectByType = ({
   characters,
   selectedChars,
   type,
-  playerCount,
+  maxOfType,
   onSelect,
 }: CharacterSelectByTypeProps) => {
   const { t } = useTranslation();
 
-  function getCharsOfType(): [CharId, Character][] {
-    return characters.filter(([, char]) => char.type === type);
-  }
-
-  function getMaxOfType(): number {
-    switch (type) {
-      case "townsfolk":
-        if (playerCount <= 6) {
-          return 3;
-        } else if (playerCount <= 9) {
-          return 5;
-        } else if (playerCount <= 12) {
-          return 7;
-        } else {
-          return 9;
-        }
-      case "outsider":
-        if (
-          playerCount <= 5 ||
-          playerCount === 7 ||
-          playerCount === 10 ||
-          playerCount === 13
-        ) {
-          return 0;
-        } else if (
-          playerCount === 6 ||
-          playerCount === 8 ||
-          playerCount === 11 ||
-          playerCount === 14
-        ) {
-          return 1;
-        } else {
-          return 2;
-        }
-      case "minion":
-        if (playerCount <= 9) {
-          return 1;
-        } else if (playerCount <= 12) {
-          return 2;
-        } else {
-          return 3;
-        }
-      default:
-        return 1;
-    }
-  }
-
   function getCurrentOfType(): number {
     let result = 0;
-    getCharsOfType().forEach(([id]) => {
+    characters.forEach(([id]) => {
       if (selectedChars.includes(id)) {
         result++;
       }
@@ -85,9 +38,9 @@ const CharacterSelectByType = ({
     <>
       <div className="text-center font-serif text-lg">{`${t(
         `cs.${type}`
-      )} (${getCurrentOfType()}/${getMaxOfType()})`}</div>
+      )} (${getCurrentOfType()}/${maxOfType})`}</div>
       <div className="mb-2 flex flex-row flex-wrap justify-center gap-2 align-middle">
-        {getCharsOfType().map(([id]) => (
+        {characters.map(([id]) => (
           <button
             onClick={() => onSelect(id)}
             key={id}
