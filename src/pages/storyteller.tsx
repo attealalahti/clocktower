@@ -15,6 +15,7 @@ import downArrow from "../../public/images/arrow_down.svg";
 import { useTranslation } from "next-i18next";
 import Modal from "../components/Modal";
 import { CharId, characters as characterMap } from "../util/characters";
+import CharacterSelectByType from "../components/CharacterSelectByType";
 
 characterMap.delete("unassigned");
 const characters = Array.from(characterMap);
@@ -211,31 +212,34 @@ const Storyteller: NextPage = () => {
             <Modal open={charSelectOpen}>
               <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
                 <div className="flex-auto overflow-scroll border-b border-white">
-                  <div className="text-center">Townsfolk (1/2)</div>
-                  <div className="flex flex-row flex-wrap justify-center gap-2 align-middle">
-                    {characters.map(([id]) => (
-                      <button
-                        onClick={() => toggleCharSelected(id)}
-                        key={id}
-                        className={`${
-                          !selectedChars.includes(id) ? "opacity-50" : ""
-                        } flex h-32 w-32 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle`}
-                      >
-                        <div className="mx-auto flex justify-center align-middle">
-                          <Image
-                            src={`/images/${id}.webp`}
-                            width={71}
-                            height={50}
-                            layout="fixed"
-                            alt={t(`characters.${id}.name`)}
-                          />
-                        </div>
-                        <div className="mx-auto flex-grow-0 text-center font-serif text-black">
-                          {t(`characters.${id}.name`)}
-                        </div>
-                      </button>
-                    ))}
-                  </div>
+                  <CharacterSelectByType
+                    characters={characters}
+                    selectedChars={selectedChars}
+                    type="townsfolk"
+                    playerCount={players.length}
+                    onSelect={toggleCharSelected}
+                  />
+                  <CharacterSelectByType
+                    characters={characters}
+                    selectedChars={selectedChars}
+                    type="outsider"
+                    playerCount={players.length}
+                    onSelect={toggleCharSelected}
+                  />
+                  <CharacterSelectByType
+                    characters={characters}
+                    selectedChars={selectedChars}
+                    type="minion"
+                    playerCount={players.length}
+                    onSelect={toggleCharSelected}
+                  />
+                  <CharacterSelectByType
+                    characters={characters}
+                    selectedChars={selectedChars}
+                    type="demon"
+                    playerCount={players.length}
+                    onSelect={toggleCharSelected}
+                  />
                 </div>
                 <div className="flex-2 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle">
                   <button className="rounded-xl border border-white bg-black p-4">
