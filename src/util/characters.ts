@@ -222,3 +222,5 @@ export const characters = new Map<CharId, Character>([
 export const getCharacter = (id: CharId): Character => {
   return characters.get(id) as Character;
 };
+
+export const modifiesGameSetup: CharId[] = ["baron", "drunk"];

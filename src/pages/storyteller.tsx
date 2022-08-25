@@ -14,7 +14,11 @@ import upArrow from "../../public/images/arrow_up.svg";
 import downArrow from "../../public/images/arrow_down.svg";
 import { useTranslation } from "next-i18next";
 import Modal from "../components/Modal";
-import { CharId, characters as characterMap } from "../util/characters";
+import {
+  CharId,
+  characters as characterMap,
+  modifiesGameSetup,
+} from "../util/characters";
 import CharacterSelectByType from "../components/CharacterSelectByType";
 
 characterMap.delete("unassigned");
@@ -131,6 +135,16 @@ const Storyteller: NextPage = () => {
     sendPlayerData(player2.id, newPlayers);
   };
 
+  const isGameSetupModified = (): boolean => {
+    let result = false;
+    selectedChars.forEach((char) => {
+      if (modifiesGameSetup.includes(char)) {
+        result = true;
+      }
+    });
+    return result;
+  };
+
   return (
     <>
       <Header />
@@ -242,6 +256,13 @@ const Storyteller: NextPage = () => {
                   />
                 </div>
                 <div className="flex-2 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle">
+                  <div
+                    className={`w-full text-center text-red-500 ${
+                      isGameSetupModified() ? "" : "hidden"
+                    }`}
+                  >
+                    Selected characters modify game setup!
+                  </div>
                   <button className="rounded-xl border border-white bg-black p-4">
                     Shuffle
                   </button>

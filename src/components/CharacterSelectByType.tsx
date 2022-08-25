@@ -1,6 +1,12 @@
-import { Character, CharId, CharType } from "../util/characters";
+import {
+  Character,
+  CharId,
+  CharType,
+  modifiesGameSetup,
+} from "../util/characters";
 import Image from "next/image";
 import { useTranslation } from "next-i18next";
+import warningIcon from "../../public/images/warning.svg";
 
 type CharacterSelectByTypeProps = {
   characters: [CharId, Character][];
@@ -87,7 +93,7 @@ const CharacterSelectByType = ({
             key={id}
             className={`${
               !selectedChars.includes(id) ? "opacity-50" : ""
-            } flex h-32 w-32 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle`}
+            } relative flex h-32 w-32 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle`}
           >
             <div className="mx-auto flex justify-center align-middle">
               <Image
@@ -100,6 +106,20 @@ const CharacterSelectByType = ({
             </div>
             <div className="mx-auto flex-grow-0 text-center font-serif text-black">
               {t(`characters.${id}.name`)}
+            </div>
+            <div
+              className={`absolute -right-2 -top-2 ${
+                modifiesGameSetup.includes(id) && selectedChars.includes(id)
+                  ? ""
+                  : "hidden"
+              }`}
+            >
+              <Image
+                src={warningIcon}
+                alt="Character modifies game setup"
+                width={50}
+                height={50}
+              />
             </div>
           </button>
         ))}
