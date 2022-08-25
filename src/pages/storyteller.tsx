@@ -13,6 +13,7 @@ import { PlayerToServer } from "../types/api-types";
 import upArrow from "../../public/images/arrow_up.svg";
 import downArrow from "../../public/images/arrow_down.svg";
 import { useTranslation } from "next-i18next";
+import Modal from "../components/Modal";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -23,6 +24,7 @@ const Storyteller: NextPage = () => {
   );
   const [disconnected, setDisconnected] = useState<boolean>(false);
   const { t } = useTranslation();
+  const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
 
   async function fetchPlayerData() {
     try {
@@ -174,6 +176,33 @@ const Storyteller: NextPage = () => {
                 </div>
               </div>
             ))}
+            <button
+              onClick={() => setCharSelectOpen(true)}
+              className="mt-4 rounded-xl bg-white p-4 font-bold text-black"
+            >
+              Select Characters
+            </button>
+            <Modal open={charSelectOpen}>
+              <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white align-middle text-white">
+                <div className="flex-auto overflow-scroll border-b border-white">
+                  chars go here
+                </div>
+                <div className="flex-2 my-2 flex flex-grow-0 flex-row justify-center gap-3 align-middle">
+                  <button className="rounded-xl border border-white bg-black p-4">
+                    Shuffle
+                  </button>
+                  <button className="rounded-xl border border-white bg-black p-4">
+                    Assign
+                  </button>
+                  <button
+                    onClick={() => setCharSelectOpen(false)}
+                    className="rounded-xl border border-white bg-black p-4"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </Modal>
           </div>
         ) : dataState === "loading" ? (
           <Image alt="loading" src={loadingAnimation} />
