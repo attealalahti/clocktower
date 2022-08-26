@@ -231,7 +231,7 @@ const Storyteller: NextPage = () => {
       <Header />
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {dataState === "loaded" ? (
-          <div className="w-full">
+          <div className="w-full lg:max-w-2xl">
             {players.map(({ id, name, character, dead }, index) => (
               <div
                 key={id}
@@ -345,12 +345,12 @@ const Storyteller: NextPage = () => {
                     Selected characters modify game setup!
                   </div>
                   <button
-                    className="rounded-xl border border-white bg-black p-4"
+                    className="rounded-xl border border-white bg-black p-2"
                     onClick={shuffleCharSelect}
                   >
                     Shuffle
                   </button>
-                  <button className="rounded-xl border border-white bg-black p-4">
+                  <button className="rounded-xl border border-white bg-black p-2">
                     Assign Randomly
                   </button>
                   <button
@@ -358,7 +358,7 @@ const Storyteller: NextPage = () => {
                       setCharSelectOpen(false);
                       resetSelectedChars();
                     }}
-                    className="rounded-xl border border-white bg-black p-4"
+                    className="rounded-xl border border-white bg-black p-2"
                   >
                     Cancel
                   </button>

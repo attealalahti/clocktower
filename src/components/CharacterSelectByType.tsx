@@ -46,18 +46,18 @@ const CharacterSelectByType = ({
             key={id}
             className={`${
               !selectedChars.includes(id) ? "opacity-50" : ""
-            } relative flex h-32 w-32 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle`}
+            } relative flex h-28 w-28 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle`}
           >
             <div className="mx-auto flex justify-center align-middle">
               <Image
                 src={`/images/${id}.webp`}
-                width={71}
-                height={50}
+                width={63}
+                height={44}
                 layout="fixed"
                 alt={t(`characters.${id}.name`)}
               />
             </div>
-            <div className="mx-auto flex-grow-0 text-center font-serif text-black">
+            <div className="mx-auto flex-grow-0 text-center font-serif text-sm text-black">
               {t(`characters.${id}.name`)}
             </div>
             <div
