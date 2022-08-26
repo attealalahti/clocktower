@@ -130,7 +130,7 @@ const Storyteller: NextPage = () => {
     }
   };
 
-  const removePlayer = async (id: number) => {
+  const removePlayer = (id: number) => {
     const confirmation = confirm(
       `Remove ${
         players.find((player) => player.id === id)?.name
@@ -141,6 +141,14 @@ const Storyteller: NextPage = () => {
       const newPlayers = players.filter((player) => player.id !== id);
       setPlayers(newPlayers);
       setRemoveModalOpen(false);
+    }
+  };
+
+  const sendCharactersToPlayers = () => {
+    const confirmation = confirm("Send assigned characters to players?");
+    if (confirmation) {
+      const ids: number[] = players.map((player) => player.id);
+      socket.emit("sendCharacters", ids);
     }
   };
 
@@ -440,6 +448,12 @@ const Storyteller: NextPage = () => {
                 </div>
               </div>
             </Modal>
+            <button
+              onClick={sendCharactersToPlayers}
+              className="mx-auto mt-4 block rounded-xl bg-white p-4 font-bold text-black"
+            >
+              Send characters
+            </button>
             <button
               onClick={() => setRemoveModalOpen(true)}
               className="mx-auto mt-4 block rounded-xl bg-white p-3 font-bold text-red-700"

@@ -36,7 +36,7 @@ export default function ws(server: Server) {
           name: player?.name as string,
           character: getCharacter(player?.role as CharId),
         };
-        socket.emit("data", data);
+        socket.emit("playerData", data);
         io.emit("playerDataChanged");
       } catch (err) {
         socket.emit("playerRemoved");
@@ -55,6 +55,22 @@ export default function ws(server: Server) {
     socket.on("removePlayer", async (id: number) => {
       await prisma.player.delete({ where: { id } });
       io.to(id.toString()).emit("playerRemoved");
+    });
+    socket.on("sendCharacters", (ids: number[]) => {
+      ids.forEach(async (id) => {
+        const player = await prisma.player.findFirst({ where: { id } });
+        if (player) {
+          const data = {
+            name: player.name as string,
+            character: getCharacter(player.stRole as CharId),
+          };
+          io.to(id.toString()).emit("playerData", data);
+          await prisma.player.update({
+            data: { role: player.stRole },
+            where: { id: player.id },
+          });
+        }
+      });
     });
     socket.on("disconnect", (reason: string) => {
       console.log(

@@ -38,7 +38,7 @@ const Play: NextPage = () => {
   useEffect(() => {
     socket.on("connect", fetchRole);
     socket.on("disconnect", () => setRole(undefined));
-    socket.on("data", ({ name, character }) => {
+    socket.on("playerData", ({ name, character }) => {
       setName(name);
       setRole(character);
     });
@@ -49,7 +49,7 @@ const Play: NextPage = () => {
     return () => {
       socket.off("connect");
       socket.off("disconnect");
-      socket.off("data");
+      socket.off("playerData");
       socket.off("playerRemoved");
     };
   }, [router.locale]);
