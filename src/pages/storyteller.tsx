@@ -26,9 +26,9 @@ import CharacterSelectByType from "../components/CharacterSelectByType";
 characterMap.delete("unassigned");
 const characters = Array.from(characterMap);
 
-function getCharsOfType(type: CharType): [CharId, Character][] {
+const getCharsOfType = (type: CharType): [CharId, Character][] => {
   return characters.filter(([, char]) => char.type === type);
-}
+};
 const townsfolk = getCharsOfType("townsfolk");
 const outsiders = getCharsOfType("outsider");
 const minions = getCharsOfType("minion");
@@ -45,42 +45,6 @@ const Storyteller: NextPage = () => {
   const { t } = useTranslation();
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
   const [selectedChars, setSelectedChars] = useState<CharId[]>([]);
-
-  async function fetchPlayerData() {
-    try {
-      const { data: newPlayers }: { data: Player[] } = await axios.get(
-        "/api/players"
-      );
-      setPlayers(newPlayers);
-      const newSelectedChars: CharId[] = newPlayers.map(
-        ({ character }) => character.id
-      );
-      setSelectedChars(newSelectedChars);
-      setDataState("loaded");
-    } catch (err) {
-      setDataState("error");
-      console.log(err);
-    }
-  }
-
-  async function sendPlayerData(id: number, updatedPlayers: Player[]) {
-    try {
-      const playerToSend = updatedPlayers.find((player) => player.id === id);
-      if (playerToSend) {
-        const data: PlayerToServer = {
-          name: playerToSend.name,
-          order: playerToSend.order,
-          stRole: playerToSend.character.id,
-          tokens: playerToSend.tokens,
-          dead: playerToSend.dead,
-        };
-        await axios.patch(`/api/players/${id}`, data);
-      }
-    } catch (err) {
-      setDataState("error");
-      console.log(err);
-    }
-  }
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -108,7 +72,43 @@ const Storyteller: NextPage = () => {
     }
   };
 
-  function getMaxOfType(type: CharType): number {
+  const fetchPlayerData = async () => {
+    try {
+      const { data: newPlayers }: { data: Player[] } = await axios.get(
+        "/api/players"
+      );
+      setPlayers(newPlayers);
+      const newSelectedChars: CharId[] = newPlayers.map(
+        ({ character }) => character.id
+      );
+      setSelectedChars(newSelectedChars);
+      setDataState("loaded");
+    } catch (err) {
+      setDataState("error");
+      console.log(err);
+    }
+  };
+
+  const sendPlayerData = async (id: number, updatedPlayers: Player[]) => {
+    try {
+      const playerToSend = updatedPlayers.find((player) => player.id === id);
+      if (playerToSend) {
+        const data: PlayerToServer = {
+          name: playerToSend.name,
+          order: playerToSend.order,
+          stRole: playerToSend.character.id,
+          tokens: playerToSend.tokens,
+          dead: playerToSend.dead,
+        };
+        await axios.patch(`/api/players/${id}`, data);
+      }
+    } catch (err) {
+      setDataState("error");
+      console.log(err);
+    }
+  };
+
+  const getMaxOfType = (type: CharType): number => {
     const playerCount = players.length;
     switch (type) {
       case "townsfolk":
@@ -148,9 +148,10 @@ const Storyteller: NextPage = () => {
           return 3;
         }
       default:
+        // Demon
         return 1;
     }
-  }
+  };
 
   const toggleCharSelected = (id: CharId) => {
     const newSelectedChars = [...selectedChars];
@@ -180,11 +181,11 @@ const Storyteller: NextPage = () => {
     setSelectedChars(newSelectedChars);
   };
 
-  function addCharsOfTypeToSet(
+  const addCharsOfTypeToSet = (
     type: CharType,
     charsOfType: [CharId, Character][],
     set: Set<CharId>
-  ) {
+  ) => {
     const sizeBeforeAdditions = set.size;
     while (set.size < getMaxOfType(type) + sizeBeforeAdditions) {
       const randomIndex = Math.floor(Math.random() * charsOfType.length);
@@ -194,7 +195,7 @@ const Storyteller: NextPage = () => {
       }
     }
     return set;
-  }
+  };
 
   const swapPlayers = (index: number, otherIndex: number) => {
     const newPlayers = [...players];
