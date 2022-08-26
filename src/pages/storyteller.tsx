@@ -80,7 +80,9 @@ const Storyteller: NextPage = () => {
         "/api/players"
       );
       setPlayers(newPlayers);
-      resetSelectedChars(newPlayers);
+      if (!charSelectOpen) {
+        resetSelectedChars(newPlayers);
+      }
       setDataState("loaded");
     } catch (err) {
       setDataState("error");
