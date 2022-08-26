@@ -20,6 +20,7 @@ import {
   modifiesGameSetup,
   CharType,
   Character,
+  getCharacter,
 } from "../util/characters";
 import CharacterSelectByType from "../components/CharacterSelectByType";
 
@@ -59,6 +60,7 @@ const Storyteller: NextPage = () => {
       socket.off("disconnect");
       socket.off("playerDataChanged");
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const toggleDead = (id: number) => {
@@ -78,10 +80,7 @@ const Storyteller: NextPage = () => {
         "/api/players"
       );
       setPlayers(newPlayers);
-      const newSelectedChars: CharId[] = newPlayers.map(
-        ({ character }) => character.id
-      );
-      setSelectedChars(newSelectedChars);
+      resetSelectedChars(newPlayers);
       setDataState("loaded");
     } catch (err) {
       setDataState("error");
@@ -94,6 +93,7 @@ const Storyteller: NextPage = () => {
       const playerToSend = updatedPlayers.find((player) => player.id === id);
       if (playerToSend) {
         const data: PlayerToServer = {
+          id: playerToSend.id,
           name: playerToSend.name,
           order: playerToSend.order,
           stRole: playerToSend.character.id,
@@ -102,6 +102,25 @@ const Storyteller: NextPage = () => {
         };
         await axios.patch(`/api/players/${id}`, data);
       }
+    } catch (err) {
+      setDataState("error");
+      console.log(err);
+    }
+  };
+
+  const sendAllPlayerData = async (updatedPlayers: Player[]) => {
+    try {
+      const data: PlayerToServer[] = updatedPlayers.map((player) => {
+        return {
+          id: player.id,
+          name: player.name,
+          order: player.order,
+          tokens: player.tokens,
+          dead: player.dead,
+          stRole: player.character.id,
+        };
+      });
+      await axios.patch("/api/players", data);
     } catch (err) {
       setDataState("error");
       console.log(err);
@@ -164,10 +183,13 @@ const Storyteller: NextPage = () => {
     setSelectedChars(newSelectedChars);
   };
 
-  const resetSelectedChars = () => {
-    const newSelectedChars: CharId[] = players.map(
-      ({ character }) => character.id
-    );
+  const resetSelectedChars = (players: Player[]) => {
+    const newSelectedChars: CharId[] = [];
+    players.forEach(({ character }) => {
+      if (character.id !== "unassigned") {
+        newSelectedChars.push(character.id);
+      }
+    });
     setSelectedChars(newSelectedChars);
   };
 
@@ -225,6 +247,38 @@ const Storyteller: NextPage = () => {
       }
     });
     return result;
+  };
+
+  const shufflePlayerArray = (array: Player[]) => {
+    let currentIndex = array.length;
+    while (currentIndex !== 0) {
+      const randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+      const player1 = array[currentIndex] as Player;
+      const player2 = array[randomIndex] as Player;
+      array[currentIndex] = player2;
+      array[randomIndex] = player1;
+    }
+  };
+
+  const assignChars = () => {
+    if (selectedChars.length <= players.length) {
+      const newPlayers = [...players];
+      newPlayers.forEach((player) => {
+        player.character = { id: "unassigned", type: "unassigned" };
+      });
+      shufflePlayerArray(newPlayers);
+      selectedChars.forEach((charId, index) => {
+        if (newPlayers[index]) {
+          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+          newPlayers[index]!.character = getCharacter(charId);
+        }
+      });
+      newPlayers.sort((a, b) => a.order - b.order);
+      setPlayers(newPlayers);
+      setCharSelectOpen(false);
+      sendAllPlayerData(newPlayers);
+    }
   };
 
   return (
@@ -351,13 +405,16 @@ const Storyteller: NextPage = () => {
                   >
                     Shuffle
                   </button>
-                  <button className="rounded-xl border border-white bg-black p-2">
+                  <button
+                    className="rounded-xl border border-white bg-black p-2"
+                    onClick={assignChars}
+                  >
                     Assign Randomly
                   </button>
                   <button
                     onClick={() => {
                       setCharSelectOpen(false);
-                      resetSelectedChars();
+                      resetSelectedChars(players);
                     }}
                     className="rounded-xl border border-white bg-black p-2"
                   >
