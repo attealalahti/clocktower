@@ -46,6 +46,7 @@ const Storyteller: NextPage = () => {
   const { t } = useTranslation();
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
   const [selectedChars, setSelectedChars] = useState<CharId[]>([]);
+  const [removeModalOpen, setRemoveModalOpen] = useState<boolean>(false);
 
   useEffect(() => {
     socket.on("connect", () => {
@@ -126,6 +127,20 @@ const Storyteller: NextPage = () => {
     } catch (err) {
       setDataState("error");
       console.log(err);
+    }
+  };
+
+  const removePlayer = async (id: number) => {
+    const confirmation = confirm(
+      `Remove ${
+        players.find((player) => player.id === id)?.name
+      } from the game?`
+    );
+    if (confirmation) {
+      socket.emit("removePlayer", id);
+      const newPlayers = players.filter((player) => player.id !== id);
+      setPlayers(newPlayers);
+      setRemoveModalOpen(false);
     }
   };
 
@@ -357,7 +372,7 @@ const Storyteller: NextPage = () => {
             ))}
             <button
               onClick={() => setCharSelectOpen(true)}
-              className="mt-4 rounded-xl bg-white p-4 font-bold text-black"
+              className="mx-auto mt-4 block rounded-xl bg-white p-4 font-bold text-black"
             >
               Select Characters
             </button>
@@ -423,6 +438,36 @@ const Storyteller: NextPage = () => {
                     Cancel
                   </button>
                 </div>
+              </div>
+            </Modal>
+            <button
+              onClick={() => setRemoveModalOpen(true)}
+              className="mx-auto mt-4 block rounded-xl bg-white p-3 font-bold text-red-700"
+            >
+              Remove player
+            </button>
+            <Modal open={removeModalOpen}>
+              <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
+                <div className="border-b border-white p-1 text-center text-lg">
+                  Remove player?
+                </div>
+                <div className="flex flex-auto flex-col gap-2 overflow-scroll border-b border-white p-1">
+                  {players.map((player) => (
+                    <button
+                      key={player.id}
+                      onClick={() => removePlayer(player.id)}
+                      className="rounded-lg border border-white bg-[rgb(255,255,255,0.1)] py-3 text-center font-serif text-xl"
+                    >
+                      {player.name}
+                    </button>
+                  ))}
+                </div>
+                <button
+                  onClick={() => setRemoveModalOpen(false)}
+                  className="flex-3 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle"
+                >
+                  Cancel
+                </button>
               </div>
             </Modal>
           </div>

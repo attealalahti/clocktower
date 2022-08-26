@@ -7,10 +7,11 @@ import loadingAnimation from "../../public/images/loading.svg";
 import { serverSideTranslations } from "next-i18next/serverSideTranslations";
 import i18n from "../../next-i18next.config.mjs";
 import { useTranslation } from "next-i18next";
-import { useSession, signIn, getSession } from "next-auth/react";
+import { useSession, signIn, getSession, signOut } from "next-auth/react";
 import { ServerToClientEvents, ClientToServerEvents } from "../types/ws-types";
 import ChangeLanguageButton from "../components/ChangeLanguageButton";
 import Link from "next/link";
+import { useRouter } from "next/router";
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -25,6 +26,7 @@ const Play: NextPage = () => {
   const [name, setName] = useState<string>("");
   const [showChar, setShowChar] = useState<boolean>(false);
   const { t } = useTranslation();
+  const router = useRouter();
 
   async function fetchRole() {
     const currentSession = await getSession();
@@ -40,13 +42,17 @@ const Play: NextPage = () => {
       setName(name);
       setRole(character);
     });
+    socket.on("playerRemoved", () => {
+      signOut({ callbackUrl: `/${router.locale}` });
+    });
     fetchRole();
     return () => {
       socket.off("connect");
       socket.off("disconnect");
       socket.off("data");
+      socket.off("playerRemoved");
     };
-  }, []);
+  }, [router.locale]);
 
   const changeName = async () => {
     const newName = prompt(t("enterName"), "");
