@@ -17,7 +17,7 @@ const Home: NextPage = () => {
     if (session) {
       router.push("/play");
     } else {
-      const name = prompt(t("enterName", ""));
+      const name = prompt(t("enterName"));
       if (name && name !== "" && !signing) {
         setSigning(true);
         signIn("credentials", { name, callbackUrl: `/${router.locale}/play` });
