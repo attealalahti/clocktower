@@ -127,11 +127,11 @@ const Play: NextPage = () => {
         ) : role && role.type === "unassigned" ? (
           <div className="dots p-3 font-serif text-2xl">{t("waiting")}</div>
         ) : (
-          <Image src={loadingAnimation} alt="loading" />
+          <Image src={loadingAnimation} alt={t("loading")} />
         )}
         <Link href="/cheatsheet">
           <div className="mt-10 rounded-lg bg-white p-4 text-2xl font-bold text-black hover:cursor-pointer">
-            See all roles
+            {t("seeAllChars")}
           </div>
         </Link>
       </main>
