@@ -10,8 +10,6 @@ import { Player } from "../types/api-types";
 import Image from "next/image";
 import loadingAnimation from "../../public/images/loading.svg";
 import { PlayerToServer } from "../types/api-types";
-import upArrow from "../../public/images/arrow_up.svg";
-import downArrow from "../../public/images/arrow_down.svg";
 import { useTranslation } from "next-i18next";
 import Modal from "../components/Modal";
 import {
@@ -23,6 +21,7 @@ import {
   getCharacter,
 } from "../util/characters";
 import CharacterSelectByType from "../components/CharacterSelectByType";
+import StViewPlayer from "../components/StViewPlayer";
 
 characterMap.delete("unassigned");
 const characters = Array.from(characterMap);
@@ -312,71 +311,14 @@ const Storyteller: NextPage = () => {
       <main className="min-w-screen flex flex-auto flex-col items-center justify-center text-center">
         {dataState === "loaded" ? (
           <div className="w-full lg:max-w-2xl">
-            {players.map(({ id, name, character, dead }, index) => (
-              <div
-                key={id}
-                className={`mt-2 w-full rounded-lg shadow-sm shadow-white ${
-                  dead && "opacity-50"
-                }`}
-              >
-                <div className="flex w-full flex-row justify-center align-middle">
-                  <button
-                    onClick={() => swapPlayers(index, index - 1)}
-                    className="m-auto flex flex-1 flex-grow-0 justify-center p-2 pr-0 align-middle"
-                  >
-                    <Image
-                      src={upArrow}
-                      width={30}
-                      height={30}
-                      layout="fixed"
-                      alt={t("st.upButton")}
-                    />
-                  </button>
-                  <button
-                    onClick={() => swapPlayers(index, index + 1)}
-                    className="flex-2 m-auto flex flex-grow-0 justify-center p-2 pl-0 align-middle"
-                  >
-                    <Image
-                      src={downArrow}
-                      width={30}
-                      height={30}
-                      layout="fixed"
-                      alt={t("st.downButton")}
-                    />
-                  </button>
-                  <button
-                    onClick={() => toggleDead(id)}
-                    className={`m-auto flex-auto font-serif text-lg ${
-                      dead && "line-through"
-                    }`}
-                  >
-                    {name}
-                  </button>
-                  <button className="flex-4 flex w-28 flex-grow-0 flex-col justify-center align-middle">
-                    <div
-                      className={`m-auto mt-2 flex justify-center align-middle ${
-                        character.type === "unassigned" && "hidden"
-                      }`}
-                    >
-                      <Image
-                        src={`/images/${character.id}.webp`}
-                        width={59}
-                        height={41}
-                        layout={"fixed"}
-                        alt={t(`characters.${character.id}.name`)}
-                      />
-                    </div>
-                    <div className="m-auto font-serif">
-                      {t(`characters.${character.id}.name`)}
-                    </div>
-                  </button>
-                </div>
-                <div className="flex flex-row flex-wrap p-1">
-                  <button className="rounded-lg bg-blue-300 p-1 text-black">
-                    {t("st.addToken")}
-                  </button>
-                </div>
-              </div>
+            {players.map((player, index) => (
+              <StViewPlayer
+                key={index}
+                player={player}
+                index={index}
+                onSwap={swapPlayers}
+                onToggleDead={toggleDead}
+              />
             ))}
             <button
               onClick={() => setCharSelectOpen(true)}
