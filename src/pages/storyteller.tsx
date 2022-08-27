@@ -67,9 +67,9 @@ const Storyteller: NextPage = () => {
   const toggleDead = (id: number) => {
     const newPlayers = [...players];
     const index = newPlayers.findIndex((player) => player.id === id);
-    if (newPlayers[index] !== undefined) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      newPlayers[index]!.dead = !newPlayers[index]!.dead;
+    const player = newPlayers.find((player) => player.id === id);
+    if (player) {
+      newPlayers.splice(index, 1, { ...player, dead: !player.dead });
       setPlayers(newPlayers);
       sendPlayerData(id, newPlayers);
     }
@@ -234,11 +234,14 @@ const Storyteller: NextPage = () => {
     set: Set<CharId>
   ) => {
     const sizeBeforeAdditions = set.size;
-    while (set.size < getMaxOfType(type) + sizeBeforeAdditions) {
-      const randomIndex = Math.floor(Math.random() * charsOfType.length);
-      if (charsOfType[randomIndex] !== undefined) {
-        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-        set.add(charsOfType[randomIndex]![0]);
+    const maxOfType = getMaxOfType(type);
+    while (set.size < maxOfType + sizeBeforeAdditions) {
+      const charToAdd = charsOfType.find(
+        (char, index) =>
+          Math.floor(Math.random() * charsOfType.length) === index
+      );
+      if (charToAdd) {
+        set.add(charToAdd[0]);
       }
     }
     return set;
@@ -294,9 +297,12 @@ const Storyteller: NextPage = () => {
       });
       shufflePlayerArray(newPlayers);
       selectedChars.forEach((charId, index) => {
-        if (newPlayers[index]) {
-          // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-          newPlayers[index]!.character = getCharacter(charId);
+        const replacedPlayer = newPlayers.find((p, i) => i === index);
+        if (replacedPlayer) {
+          newPlayers.splice(index, 1, {
+            ...replacedPlayer,
+            character: getCharacter(charId),
+          });
         }
       });
       newPlayers.sort((a, b) => a.order - b.order);
@@ -309,9 +315,10 @@ const Storyteller: NextPage = () => {
   const assignCharForPlayer = (playerId: number, character: Character) => {
     const newPlayers = [...players];
     const index = newPlayers.findIndex((player) => player.id === playerId);
-    if (newPlayers[index]) {
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      newPlayers[index]!.character = character;
+    const player = newPlayers.find((player) => player.id === playerId);
+    if (player) {
+      newPlayers.splice(index, 1, { ...player, character });
+      resetSelectedChars(newPlayers);
       setPlayers(newPlayers);
       sendPlayerData(playerId, newPlayers);
     }
