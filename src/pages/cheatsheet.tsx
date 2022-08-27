@@ -7,8 +7,9 @@ import CharacterInfoByType from "../components/CharacterInfoByType";
 import Header from "../components/Header";
 import { characters as characterMap } from "../util/characters";
 
-characterMap.delete("unassigned");
-const characters = Array.from(characterMap);
+const characterMapNoUnassigned = new Map(characterMap);
+characterMapNoUnassigned.delete("unassigned");
+const characters = Array.from(characterMapNoUnassigned);
 const firstNightChars = characters.filter(
   ([, char]) => char.firstNightOrder !== undefined
 );

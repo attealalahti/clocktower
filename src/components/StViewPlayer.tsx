@@ -5,18 +5,27 @@ import downArrow from "../../public/images/arrow_down.svg";
 import Image from "next/image";
 import Modal from "../components/Modal";
 import { useState } from "react";
+import {
+  Character,
+  characters as characterMap,
+  getCharacter,
+} from "../util/characters";
+
+const characters = Array.from(characterMap);
 
 type StViewPlayerProps = {
   player: Player;
   index: number;
   onSwap: (index: number, otherIndex: number) => void;
   onToggleDead: (id: number) => void;
+  onSelectChar: (playerId: number, character: Character) => void;
 };
 const StViewPlayer = ({
   player,
   index,
   onSwap,
   onToggleDead,
+  onSelectChar,
 }: StViewPlayerProps) => {
   const { t } = useTranslation();
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
@@ -83,7 +92,44 @@ const StViewPlayer = ({
         </button>
         <Modal open={charSelectOpen}>
           <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
-            <button onClick={() => setCharSelectOpen(false)}>Close</button>
+            <div className="border-b border-white p-1 text-center text-lg">
+              {t("st.selectCharTitle")}
+            </div>
+            <div className="flex flex-auto flex-row flex-wrap justify-center gap-2 overflow-scroll border-b border-white p-1 align-middle">
+              {characters.map(([id]) => (
+                <button
+                  onClick={() => {
+                    onSelectChar(player.id, getCharacter(id));
+                    setCharSelectOpen(false);
+                  }}
+                  key={id}
+                  className="relative flex h-28 w-28 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle"
+                >
+                  <div
+                    className={`${
+                      id === "unassigned" ? "hidden" : ""
+                    } mx-auto flex justify-center align-middle`}
+                  >
+                    <Image
+                      src={`/images/${id}.webp`}
+                      width={63}
+                      height={44}
+                      layout="fixed"
+                      alt={t(`characters.${id}.name`)}
+                    />
+                  </div>
+                  <div className="mx-auto flex-grow-0 text-center font-serif text-sm text-black">
+                    {t(`characters.${id}.name`)}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setCharSelectOpen(false)}
+              className="flex-3 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle"
+            >
+              {t("st.cancel")}
+            </button>
           </div>
         </Modal>
       </div>

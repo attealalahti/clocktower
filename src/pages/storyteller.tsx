@@ -23,8 +23,9 @@ import {
 import CharacterSelectByType from "../components/CharacterSelectByType";
 import StViewPlayer from "../components/StViewPlayer";
 
-characterMap.delete("unassigned");
-const characters = Array.from(characterMap);
+const characterMapNoUnassigned = new Map(characterMap);
+characterMapNoUnassigned.delete("unassigned");
+const characters = Array.from(characterMapNoUnassigned);
 
 const getCharsOfType = (type: CharType): [CharId, Character][] => {
   return characters.filter(([, char]) => char.type === type);
@@ -305,6 +306,17 @@ const Storyteller: NextPage = () => {
     }
   };
 
+  const assignCharForPlayer = (playerId: number, character: Character) => {
+    const newPlayers = [...players];
+    const index = newPlayers.findIndex((player) => player.id === playerId);
+    if (newPlayers[index]) {
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      newPlayers[index]!.character = character;
+      setPlayers(newPlayers);
+      sendPlayerData(playerId, newPlayers);
+    }
+  };
+
   return (
     <>
       <Header />
@@ -318,6 +330,7 @@ const Storyteller: NextPage = () => {
                 index={index}
                 onSwap={swapPlayers}
                 onToggleDead={toggleDead}
+                onSelectChar={assignCharForPlayer}
               />
             ))}
             <button

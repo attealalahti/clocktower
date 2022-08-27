@@ -31,6 +31,7 @@
     "charModifiesSetup": "Hahmo muokkaa pelin alkuasetelmaa.",
     "shuffle": "Sekoita",
     "assign": "Sijoita satunnaisesti",
+    "selectCharTitle": "Valitse hahmo:",
     "cancel": "Peruuta",
     "sendChars": "Lähetä hahmot",
     "sendConfirm": "Lähetä asetetut hahmot pelaajille?",
