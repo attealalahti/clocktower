@@ -2,6 +2,7 @@
   "header": {
     "changeLanguage": "Suomeksi"
   },
+  "loading": "Loading",
   "joinGame": "Click here to join the game!",
   "enterName": "Enter your name:",
   "changeName": "Change name",
@@ -24,6 +25,17 @@
     "downButton": "Move player up",
     "upButton": "Move player down",
     "addToken": "Add token",
+    "selectChars": "Select characters",
+    "selectedCharsModifySetup": "Selected characters modify game setup!",
+    "charModifiesSetup": "Character modifies game setup",
+    "shuffle": "Shuffle",
+    "assign": "Assign randomly",
+    "cancel": "Cancel",
+    "sendChars": "Send characters",
+    "sendConfirm": "Send assigned characters to players?",
+    "removePlayer": "Remove player",
+    "removePlayerTitle": "Remove player?",
+    "removeConfirm": "Remove {{name}} from the game?",
     "error": "An error occurred",
     "disconnected": "You are disconnected. Live updates have stopped."
   },

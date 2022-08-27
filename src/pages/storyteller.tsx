@@ -132,9 +132,9 @@ const Storyteller: NextPage = () => {
 
   const removePlayer = (id: number) => {
     const confirmation = confirm(
-      `Remove ${
-        players.find((player) => player.id === id)?.name
-      } from the game?`
+      t("st.removeConfirm", {
+        name: players.find((player) => player.id === id)?.name,
+      })
     );
     if (confirmation) {
       socket.emit("removePlayer", id);
@@ -145,7 +145,7 @@ const Storyteller: NextPage = () => {
   };
 
   const sendCharactersToPlayers = () => {
-    const confirmation = confirm("Send assigned characters to players?");
+    const confirmation = confirm(t("st.sendConfirm"));
     if (confirmation) {
       const ids: number[] = players.map((player) => player.id);
       socket.emit("sendCharacters", ids);
@@ -382,7 +382,7 @@ const Storyteller: NextPage = () => {
               onClick={() => setCharSelectOpen(true)}
               className="mx-auto mt-4 block rounded-xl bg-white p-4 font-bold text-black"
             >
-              Select Characters
+              {t("st.selectChars")}
             </button>
             <Modal open={charSelectOpen}>
               <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
@@ -422,19 +422,22 @@ const Storyteller: NextPage = () => {
                       isGameSetupModified() ? "" : "hidden"
                     }`}
                   >
-                    Selected characters modify game setup!
+                    {t("st.selectedCharsModifySetup")}
                   </div>
                   <button
                     className="rounded-xl border border-white bg-black p-2"
                     onClick={shuffleCharSelect}
                   >
-                    Shuffle
+                    {t("st.shuffle")}
                   </button>
                   <button
-                    className="rounded-xl border border-white bg-black p-2"
+                    className={`rounded-xl border border-white bg-black p-2 ${
+                      selectedChars.length > players.length ? "opacity-50" : ""
+                    }`}
                     onClick={assignChars}
+                    disabled={selectedChars.length > players.length}
                   >
-                    Assign Randomly
+                    {t("st.assign")}
                   </button>
                   <button
                     onClick={() => {
@@ -443,7 +446,7 @@ const Storyteller: NextPage = () => {
                     }}
                     className="rounded-xl border border-white bg-black p-2"
                   >
-                    Cancel
+                    {t("st.cancel")}
                   </button>
                 </div>
               </div>
@@ -452,18 +455,18 @@ const Storyteller: NextPage = () => {
               onClick={sendCharactersToPlayers}
               className="mx-auto mt-4 block rounded-xl bg-white p-4 font-bold text-black"
             >
-              Send characters
+              {t("st.sendChars")}
             </button>
             <button
               onClick={() => setRemoveModalOpen(true)}
               className="mx-auto mt-4 block rounded-xl bg-white p-3 font-bold text-red-700"
             >
-              Remove player
+              {t("st.removePlayer")}
             </button>
             <Modal open={removeModalOpen}>
               <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
                 <div className="border-b border-white p-1 text-center text-lg">
-                  Remove player?
+                  {t("st.removePlayerTitle")}
                 </div>
                 <div className="flex flex-auto flex-col gap-2 overflow-scroll border-b border-white p-1">
                   {players.map((player) => (
@@ -480,13 +483,13 @@ const Storyteller: NextPage = () => {
                   onClick={() => setRemoveModalOpen(false)}
                   className="flex-3 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle"
                 >
-                  Cancel
+                  {t("st.cancel")}
                 </button>
               </div>
             </Modal>
           </div>
         ) : dataState === "loading" ? (
-          <Image alt="loading" src={loadingAnimation} />
+          <Image alt={t("loading")} src={loadingAnimation} />
         ) : (
           <div className="border border-red-500 p-4 text-lg text-red-500">
             {t("st.error")}

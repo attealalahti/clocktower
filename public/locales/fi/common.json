@@ -2,6 +2,7 @@
   "header": {
     "changeLanguage": "In English"
   },
+  "loading": "Latautuu",
   "joinGame": "Liity peliin klikkaamalla tästä!",
   "enterName": "Anna nimesi:",
   "changeName": "Vaihda nimi",
@@ -24,6 +25,17 @@
     "downButton": "Siirrä pelaajaa ylös",
     "upButton": "Siirrä pelaajaa alas",
     "addToken": "Lisää merkki",
+    "selectChars": "Valitse hahmot",
+    "selectedCharsModifySetup": "Valitut hahmot muokkaavat pelin alkuasetelmaa!",
+    "charModifiesSetup": "Hahmo muokkaa pelin alkuasetelmaa.",
+    "shuffle": "Sekoita",
+    "assign": "Sijoita satunnaisesti",
+    "cancel": "Peruuta",
+    "sendChars": "Lähetä hahmot",
+    "sendConfirm": "Lähetä asetetut hahmot pelaajille?",
+    "removePlayer": "Poista pelaaja",
+    "removePlayerTitle": "Poista pelaaja?",
+    "removeConfirm": "Poista {{name}} pelistä?",
     "error": "Tapahtui virhe",
     "disconnected": "Yhteys katkesi. Suorat päivitykset ovat pysähtyneet."
   },

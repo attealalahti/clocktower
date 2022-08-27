@@ -69,7 +69,7 @@ const CharacterSelectByType = ({
             >
               <Image
                 src={warningIcon}
-                alt="Character modifies game setup"
+                alt={t("st.charModifiesSetup")}
                 width={50}
                 height={50}
               />
