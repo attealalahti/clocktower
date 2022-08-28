@@ -140,5 +140,24 @@
       "name": "Baron",
       "power": "There are 2 extra Outsiders in play."
     }
+  },
+  "tokens": {
+    "butlerMaster": "Master",
+    "isDrunk": "Drunk",
+    "fortuneTellerRedHerring": "Red herring",
+    "investigatorDecoy": "Wrong",
+    "investigatorMinion": "Minion",
+    "librarianDecoy": "Wrong",
+    "librarianOutsider": "Outsider",
+    "monkProtected": "Protected",
+    "poisonerPoisoned": "Poisoned",
+    "scarletWomanDemon": "Demon",
+    "undertakerExecuted": "Executed",
+    "slayerUsed": "No ability",
+    "virginUsed": "No ability",
+    "washerwomanTownsfolk": "Townsfolk",
+    "washerwomanDecoy": "Wrong",
+    "good": "Good",
+    "evil": "Evil"
   }
 }

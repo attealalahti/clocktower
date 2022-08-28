@@ -10,6 +10,7 @@ import {
   characters as characterMap,
   getCharacter,
 } from "../util/characters";
+import { TokenId, Token } from "../util/tokens";
 
 const characters = Array.from(characterMap);
 
@@ -19,6 +20,8 @@ type StViewPlayerProps = {
   onSwap: (index: number, otherIndex: number) => void;
   onToggleDead: (id: number) => void;
   onSelectChar: (playerId: number, character: Character) => void;
+  onTokenAdd: (playerId: number, tokenId: string) => void;
+  availableTokens: [TokenId, Token][];
 };
 const StViewPlayer = ({
   player,
@@ -26,9 +29,27 @@ const StViewPlayer = ({
   onSwap,
   onToggleDead,
   onSelectChar,
+  onTokenAdd,
+  availableTokens,
 }: StViewPlayerProps) => {
   const { t } = useTranslation();
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
+  const [tokenSelectOpen, setTokenSelectOpen] = useState<boolean>(false);
+
+  const addToken = () => {
+    onTokenAdd(player.id, "butlerMaster");
+  };
+
+  const getTokens = () => {
+    const tokens: string[] = [];
+    for (const key in player.tokens) {
+      if (player.tokens[key]) {
+        tokens.push(key);
+      }
+    }
+    return tokens;
+  };
+
   return (
     <div
       key={player.id}
@@ -103,7 +124,7 @@ const StViewPlayer = ({
                     setCharSelectOpen(false);
                   }}
                   key={id}
-                  className="relative flex h-28 w-28 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle"
+                  className="flex h-28 w-28 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle"
                 >
                   <div
                     className={`${
@@ -134,9 +155,52 @@ const StViewPlayer = ({
         </Modal>
       </div>
       <div className="flex flex-row flex-wrap p-1">
-        <button className="rounded-lg bg-blue-300 p-1 text-black">
+        <button
+          onClick={() => setTokenSelectOpen(true)}
+          className="rounded-lg bg-blue-300 p-1 text-black"
+        >
           {t("st.addToken")}
         </button>
+        <Modal open={tokenSelectOpen}>
+          <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
+            <div className="border-b border-white p-1 text-center text-lg">
+              {t("st.selectTokenTitle")}
+            </div>
+            <div className="flex flex-auto flex-row flex-wrap justify-center gap-2 overflow-scroll border-b border-white p-1 align-middle">
+              {availableTokens.map(([id, token]) => (
+                <button
+                  onClick={() => {
+                    setTokenSelectOpen(false);
+                  }}
+                  key={id}
+                  className="flex h-28 w-28 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle"
+                >
+                  <div className="mx-auto flex justify-center align-middle">
+                    <Image
+                      src={`/images/${token.icon}.webp`}
+                      width={63}
+                      height={44}
+                      layout="fixed"
+                      alt={t(`tokens.${id}`)}
+                    />
+                  </div>
+                  <div className="mx-auto flex-grow-0 text-center font-serif text-sm text-black">
+                    {t(`tokens.${id}`)}
+                  </div>
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={() => setTokenSelectOpen(false)}
+              className="flex-3 my-2 flex flex-grow-0 flex-row flex-wrap justify-center gap-3 align-middle"
+            >
+              {t("st.cancel")}
+            </button>
+          </div>
+        </Modal>
+        {getTokens().map((token, index) => (
+          <div key={index}>{token}</div>
+        ))}
       </div>
     </div>
   );

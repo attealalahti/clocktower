@@ -2,20 +2,7 @@ import { Character } from "../util/characters";
 import { z } from "zod";
 
 export type Tokens = {
-  butlerMaster?: boolean;
-  isTheDrunk?: boolean;
-  fortuneTellerRedHerring?: boolean;
-  investigatorDecoy?: boolean;
-  investigatorMinion?: boolean;
-  librarianDecoy?: boolean;
-  librarianOutsider?: boolean;
-  monkProtected?: boolean;
-  poisonerPoisoned?: boolean;
-  scarletWomanDemon?: boolean;
-  undertakerExecuted?: boolean;
-  virginUsed?: boolean;
-  washerwomanTownsfolk?: boolean;
-  washerwomanDecoy?: boolean;
+  [key: string]: boolean | undefined;
 };
 
 export type Player = {

@@ -22,6 +22,7 @@ import {
 } from "../util/characters";
 import CharacterSelectByType from "../components/CharacterSelectByType";
 import StViewPlayer from "../components/StViewPlayer";
+import { tokens as tokenMap } from "../util/tokens";
 
 const characterMapNoUnassigned = new Map(characterMap);
 characterMapNoUnassigned.delete("unassigned");
@@ -34,6 +35,8 @@ const townsfolk = getCharsOfType("townsfolk");
 const outsiders = getCharsOfType("outsider");
 const minions = getCharsOfType("minion");
 const demons = getCharsOfType("demon");
+
+const allTokens = Array.from(tokenMap);
 
 const socket: Socket<ServerToClientEvents, ClientToServerEvents> = io();
 
@@ -324,6 +327,26 @@ const Storyteller: NextPage = () => {
     }
   };
 
+  const addTokenForPlayer = (playerId: number, tokenId: string) => {
+    const newPlayers = [...players];
+    const index = newPlayers.findIndex((player) => player.id === playerId);
+    const player = newPlayers.find((player) => player.id === playerId);
+    if (player) {
+      player.tokens[tokenId] = true;
+      newPlayers.splice(index, 1, player);
+      setPlayers(newPlayers);
+      sendPlayerData(playerId, newPlayers);
+    }
+  };
+
+  const getAvailableTokens = () => {
+    return allTokens.filter(
+      ([, token]) =>
+        token.charIndependent ||
+        players.find((player) => token.icon === player.character.id)
+    );
+  };
+
   return (
     <>
       <Header />
@@ -338,6 +361,8 @@ const Storyteller: NextPage = () => {
                 onSwap={swapPlayers}
                 onToggleDead={toggleDead}
                 onSelectChar={assignCharForPlayer}
+                onTokenAdd={addTokenForPlayer}
+                availableTokens={getAvailableTokens()}
               />
             ))}
             <button

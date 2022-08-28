@@ -140,5 +140,24 @@
       "name": "Paroni",
       "power": "Pelissä on kaksi enemmän Ulkopuolista."
     }
+  },
+  "tokens": {
+    "butlerMaster": "Mestari",
+    "isDrunk": "Juoppo",
+    "fortuneTellerRedHerring": "Harhautus",
+    "investigatorDecoy": "Väärä",
+    "investigatorMinion": "Kätyri",
+    "librarianDecoy": "Väärä",
+    "librarianOutsider": "Ulkopuolinen",
+    "monkProtected": "Suojeltu",
+    "poisonerPoisoned": "Myrkytetty",
+    "scarletWomanDemon": "Demoni",
+    "undertakerExecuted": "Teloitettu",
+    "slayerUsed": "Ei voimaa",
+    "virginUsed": "Ei voimaa",
+    "washerwomanTownsfolk": "Kyläläinen",
+    "washerwomanDecoy": "Väärä",
+    "good": "Hyvä",
+    "evil": "Paha"
   }
 }

@@ -61,7 +61,7 @@ model player {
   role   String  @default("unassigned")
   order  Int     @default(autoincrement())
   stRole String  @default("unassigned") @map("st_role")
-  tokens Json?   @db.Json
+  tokens Json?   @db.Json @default("{}")
   dead   Boolean @default(false)
 }
 
