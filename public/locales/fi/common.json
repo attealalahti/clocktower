@@ -32,6 +32,7 @@
     "shuffle": "Sekoita",
     "assign": "Sijoita satunnaisesti",
     "selectCharTitle": "Valitse hahmo:",
+    "selectTokenTitle": "Lisää merkki:",
     "cancel": "Peruuta",
     "sendChars": "Lähetä hahmot",
     "sendConfirm": "Lähetä asetetut hahmot pelaajille?",

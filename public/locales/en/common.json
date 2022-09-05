@@ -33,6 +33,7 @@
     "assign": "Assign randomly",
     "cancel": "Cancel",
     "selectCharTitle": "Select character:",
+    "selectTokenTitle": "Add token:",
     "sendChars": "Send characters",
     "sendConfirm": "Send assigned characters to players?",
     "removePlayer": "Remove player",

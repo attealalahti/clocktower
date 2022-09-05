@@ -36,10 +36,6 @@ const StViewPlayer = ({
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
   const [tokenSelectOpen, setTokenSelectOpen] = useState<boolean>(false);
 
-  const addToken = () => {
-    onTokenAdd(player.id, "butlerMaster");
-  };
-
   const getTokens = () => {
     const tokens: string[] = [];
     for (const key in player.tokens) {
@@ -171,6 +167,7 @@ const StViewPlayer = ({
                 <button
                   onClick={() => {
                     setTokenSelectOpen(false);
+                    onTokenAdd(player.id, id);
                   }}
                   key={id}
                   className="flex h-28 w-28 flex-col justify-center rounded-full border-4 border-gray-600 bg-gray-300 p-2 align-middle"
