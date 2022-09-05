@@ -2,6 +2,7 @@ import { useTranslation } from "next-i18next";
 import { Player } from "../types/api-types";
 import upArrow from "../../public/images/arrow_up.svg";
 import downArrow from "../../public/images/arrow_down.svg";
+import addIcon from "../../public/images/add.svg";
 import Image from "next/image";
 import Modal from "../components/Modal";
 import { useState } from "react";
@@ -150,12 +151,12 @@ const StViewPlayer = ({
           </div>
         </Modal>
       </div>
-      <div className="flex flex-row flex-wrap p-1">
+      <div className="flex flex-row flex-wrap p-1 pt-0">
         <button
           onClick={() => setTokenSelectOpen(true)}
-          className="rounded-lg bg-blue-300 p-1 text-black"
+          className="m-1 mr-2 flex justify-center align-middle text-black"
         >
-          {t("st.addToken")}
+          <Image src={addIcon} alt={t("st.addToken")} width={45} height={45} />
         </button>
         <Modal open={tokenSelectOpen}>
           <div className="box-border flex h-full w-full flex-col justify-center rounded-lg border border-white bg-[rgb(0,0,0,0.7)] align-middle text-white">
