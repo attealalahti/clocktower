@@ -11,7 +11,7 @@ import {
   characters as characterMap,
   getCharacter,
 } from "../util/characters";
-import { TokenId, Token } from "../util/tokens";
+import { TokenId, Token, tokens } from "../util/tokens";
 
 const characters = Array.from(characterMap);
 
@@ -37,24 +37,30 @@ const StViewPlayer = ({
   const [charSelectOpen, setCharSelectOpen] = useState<boolean>(false);
   const [tokenSelectOpen, setTokenSelectOpen] = useState<boolean>(false);
 
-  const getTokens = () => {
-    const tokens: string[] = [];
+  const getPlayerTokens = () => {
+    const playerTokens: Token[] = [];
     for (const key in player.tokens) {
       if (player.tokens[key]) {
-        tokens.push(key);
+        const token = tokens.get(key as TokenId);
+        if (token) {
+          playerTokens.push(token);
+        }
       }
     }
-    return tokens;
+    return playerTokens;
   };
 
   return (
+    /* Main container */
     <div
       key={player.id}
       className={`mt-2 w-full rounded-lg shadow-sm shadow-white ${
         player.dead && "opacity-50"
       }`}
     >
+      {/* First row */}
       <div className="flex w-full flex-row justify-center align-middle">
+        {/* Arrow buttons */}
         <button
           onClick={() => onSwap(index, index - 1)}
           className="m-auto flex flex-1 flex-grow-0 justify-center p-2 pr-0 align-middle"
@@ -79,6 +85,7 @@ const StViewPlayer = ({
             alt={t("st.downButton")}
           />
         </button>
+        {/* Name */}
         <button
           onClick={() => onToggleDead(player.id)}
           className={`m-auto flex-auto font-serif text-lg ${
@@ -87,6 +94,7 @@ const StViewPlayer = ({
         >
           {player.name}
         </button>
+        {/* Character */}
         <button
           onClick={() => setCharSelectOpen(true)}
           className="flex-4 flex w-28 flex-grow-0 flex-col justify-center align-middle"
@@ -151,10 +159,12 @@ const StViewPlayer = ({
           </div>
         </Modal>
       </div>
-      <div className="flex flex-row flex-wrap p-1 pt-0">
+      {/* Second row */}
+      <div className="flex flex-row flex-wrap gap-1 p-1 pt-0">
+        {/* Add token button */}
         <button
           onClick={() => setTokenSelectOpen(true)}
-          className="m-1 mr-2 flex justify-center align-middle text-black"
+          className="m-1 flex justify-center align-middle text-black"
         >
           <Image src={addIcon} alt={t("st.addToken")} width={45} height={45} />
         </button>
@@ -196,8 +206,22 @@ const StViewPlayer = ({
             </button>
           </div>
         </Modal>
-        {getTokens().map((token, index) => (
-          <div key={index}>{token}</div>
+        {/* Tokens */}
+        {getPlayerTokens().map(({ id, icon }, index) => (
+          <button
+            key={index}
+            className="flex flex-row justify-center rounded-full border border-white p-1 px-2 align-middle"
+          >
+            <div className="m-auto">
+              <Image
+                src={`/images/${icon}.webp`}
+                alt=""
+                width={35.4}
+                height={24.8}
+              />
+            </div>
+            <div className="m-auto">{t(`tokens.${id}`)}</div>
+          </button>
         ))}
       </div>
     </div>
