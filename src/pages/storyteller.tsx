@@ -339,6 +339,18 @@ const Storyteller: NextPage = () => {
     }
   };
 
+  const deleteTokenFromPlayer = (playerId: number, tokenId: string) => {
+    const newPlayers = [...players];
+    const index = newPlayers.findIndex((player) => player.id === playerId);
+    const player = newPlayers.find((player) => player.id === playerId);
+    if (player) {
+      player.tokens[tokenId] = undefined;
+      newPlayers.splice(index, 1, player);
+      setPlayers(newPlayers);
+      sendPlayerData(playerId, newPlayers);
+    }
+  };
+
   const getAvailableTokens = () => {
     return allTokens.filter(
       ([, token]) =>
@@ -362,6 +374,7 @@ const Storyteller: NextPage = () => {
                 onToggleDead={toggleDead}
                 onSelectChar={assignCharForPlayer}
                 onTokenAdd={addTokenForPlayer}
+                onTokenDelete={deleteTokenFromPlayer}
                 availableTokens={getAvailableTokens()}
               />
             ))}

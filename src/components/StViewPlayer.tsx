@@ -22,6 +22,7 @@ type StViewPlayerProps = {
   onToggleDead: (id: number) => void;
   onSelectChar: (playerId: number, character: Character) => void;
   onTokenAdd: (playerId: number, tokenId: string) => void;
+  onTokenDelete: (playerId: number, tokenId: string) => void;
   availableTokens: [TokenId, Token][];
 };
 const StViewPlayer = ({
@@ -31,6 +32,7 @@ const StViewPlayer = ({
   onToggleDead,
   onSelectChar,
   onTokenAdd,
+  onTokenDelete,
   availableTokens,
 }: StViewPlayerProps) => {
   const { t } = useTranslation();
@@ -211,6 +213,7 @@ const StViewPlayer = ({
           <button
             key={index}
             className="flex flex-row justify-center rounded-full border border-white p-1 px-2 align-middle"
+            onClick={() => onTokenDelete(player.id, id)}
           >
             <div className="m-auto">
               <Image
