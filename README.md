@@ -23,6 +23,12 @@ All players except for the Storyteller join the game on their phone browsers. Th
 - Send characters to players.
 - Add/remove reminder tokens to/from players.
 
+## Screenshots
+<div>
+  <img src="/screenshots/player_view.png"  alt="Player view" style="width: 320px;" />
+  <img src="/screenshots/storyteller_view.png"  alt="Storyteller view" style="width: 320px;" />
+</div>
+
 ## Limitations
 - Trouble Brewing is the only currently available script
 - No travelers
